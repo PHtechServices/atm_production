@@ -21,11 +21,6 @@ code {
   min-height: 1% !important
 }
 
-#quickGlance {
-  background-color: rgb(202, 202, 202);
-  width: fit-content;
-}
-
 #dContent {
   margin-right: -10px;
     margin-left: 120px;

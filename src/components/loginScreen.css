@@ -4,6 +4,7 @@
   width: 100%;
   margin: 0 auto;
   padding-bottom: 10%;
+  margin-left: 33%;
 }
 
 #contact input[type="text"],
@@ -57,7 +58,7 @@ fieldset {
   resize: none;
 }
 
-#contact button[type="submit"] {
+button[type="submit"] {
   cursor: pointer;
   width: 100%;
   border: none;
@@ -68,13 +69,13 @@ fieldset {
   font-size: 15px;
 }
 
-#contact button[type="submit"]:hover {
+button[type="submit"]:hover {
   -webkit-transition: background 0.3s ease-in-out;
   -moz-transition: background 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
 
-#contact button[type="submit"]:active {
+button[type="submit"]:active {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 

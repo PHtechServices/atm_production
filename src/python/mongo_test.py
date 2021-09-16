@@ -11,9 +11,11 @@ client = MongoClient("mongodb+srv://himanshu:himanshu@cluster0.ebjdo.mongodb.net
 db = client.AtmPohu
 collection = db.Users
 collection1 = db.Task
+roleID = []
 def userNameCheck(userName):
     for doc in collection.find():
         if userName == doc["Users"]["Username"]:
+            roleID.append(doc["Users"]["role"])
             return("Success")
 
 def passwordCheck(password):
@@ -29,9 +31,14 @@ def loginTest():
     passwordN = passwordCheck(details["password"])
     if userName == "Success":
         if passwordN == "Success":
-            return jsonify({"message":"Congratualtion for Login"})
+            return jsonify({"message":"Congratualtion for Login",
+            "roles":roleID[-1]})
         else:
-            return jsonify({"message":"UserName or Password is Incorrect"})
+            return jsonify({"message":"UserName or Password is Incorrect",
+            "roles":"Not Defined"})
+    else:
+        return jsonify({"message":"UserName or Password is Incorrect",
+            "roles":"Not Defined"})
 
 @app.route("/createuser", methods=['POST'])
 def insert_document():

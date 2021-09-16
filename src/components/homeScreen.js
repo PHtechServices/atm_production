@@ -1,13 +1,13 @@
 import React from 'react';
 import "./homeScreen.css"
 
-function HomeScreen() {
+function HomeScreen(props) {
+
+  var message = props.name
 
   return (
-    <div id="loginScreen">
-      <form id="contact">
-        <h4 id="welcomeText">Welcome Himanshu Singh</h4>
-      </form>
+    <div id="homeScreen">
+        <p id="welcomeText">{message}</p>
     </div>
   );
 }
