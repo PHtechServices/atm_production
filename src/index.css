@@ -21,7 +21,6 @@ code {
   min-height: 1% !important
 }
 
-#dContent {
-  margin-right: -10px;
-    margin-left: 120px;
+#dLogin {
+  margin-top: 2%;
 }

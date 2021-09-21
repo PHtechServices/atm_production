@@ -14,13 +14,13 @@ collection1 = db.Task
 roleID = []
 def userNameCheck(userName):
     for doc in collection.find():
-        if userName == doc["Users"]["Username"]:
-            roleID.append(doc["Users"]["role"])
+        if userName == doc["UserDetails"]["userName"]:
+            roleID.append(doc["UserDetails"]["Name"])
             return("Success")
 
 def passwordCheck(password):
     for doc in collection.find():
-        if password == doc["Users"]["Password"]:
+        if password == doc["UserDetails"]["password"]:
             return("Success")
 
 @app.route("/login", methods=['POST'])
@@ -32,7 +32,7 @@ def loginTest():
     if userName == "Success":
         if passwordN == "Success":
             return jsonify({"message":"Congratualtion for Login",
-            "roles":roleID[-1]})
+            "roles":roleID.pop()})
         else:
             return jsonify({"message":"UserName or Password is Incorrect",
             "roles":"Not Defined"})
@@ -44,12 +44,12 @@ def loginTest():
 def insert_document():
     req_data = request.get_json()
     collection.insert_one(req_data).inserted_id
-    return jsonify({"message":"Congratualtions user inserted Sucessfully..."})
+    return jsonify({"message":"User Created Successfully"})
 
 @app.route("/creattask", methods=['POST'])
 def insert_document2():
     req_data = request.get_json()
     collection1.insert_one(req_data).inserted_id
-    return jsonify({"message":"Congratualtions user inserted Sucessfully..."})
+    return jsonify({"message":"Task Assigned Successfully"})
 
 app.run(debug=True)

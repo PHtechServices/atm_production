@@ -1,14 +1,18 @@
 import React from 'react';
-import "./homeScreen.css"
+import "./homeScreen.scss"
 
 function HomeScreen(props) {
 
   var message = props.name
 
   return (
-    <div id="homeScreen">
-        <p id="welcomeText">{message}</p>
+    <div class="content homeScreen">
+    <div class="content__container">
+      <p class="content__container__text" style={{fontSize:"40%", paddingTop:"1%"}}>
+        Hello, {message} !
+      </p>
     </div>
+  </div>
   );
 }
 

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './loginScreen.css'
 import React from 'react';
-import CreateTask from './createTask';
 import ReactDOM from 'react-dom';
+import HomeScreen from './homeScreen';
 
 function CreateUser() {
     const [userId, setUserId] = useState("");
@@ -40,13 +40,13 @@ function CreateUser() {
     const createNewUser = () => {
 
         var data = JSON.stringify({
-            "Users": {
-                "userId": userId,
-                "user": user,
+            "UserDetails": {
+                "userID": userId,
+                "userType": user,
                 "Name": Name,
-                "Username": Username,
-                "Password": Password,
-                "role": role
+                "userName": Username,
+                "password": Password,
+                "userRole": role
             }
         });
 
@@ -61,16 +61,16 @@ function CreateUser() {
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                var status = response.data.message
+                ReactDOM.render(
+                    <React.StrictMode>
+                        <HomeScreen name={status} />
+                    </React.StrictMode>,
+                    document.getElementById('dLogin'));
             })
             .catch(function (error) {
                 console.log(error);
             });
-            ReactDOM.render(
-                <React.StrictMode>
-                  <CreateTask />
-                </React.StrictMode>,
-                document.getElementById('dLogin'));
     }
     return (
         <div id="createUserScreen">
@@ -106,10 +106,8 @@ function CreateUser() {
                         <option value="Write">Write</option>
                     </select>
                 </fieldset>
-                <fieldset>
-                    <button type="submit" onClick={createNewUser}>Submit</button>
-                </fieldset>
             </form>
+                    <button type="submit" onClick={createNewUser}>Submit</button>
         </div>
     );
 }

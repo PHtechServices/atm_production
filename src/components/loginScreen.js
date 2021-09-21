@@ -4,7 +4,6 @@ import './loginScreen.css'
 import ReactDOM from 'react-dom';
 import React from 'react';
 import HomeScreen from './homeScreen';
-import QuickGlance from './js/quickGlance';
 import MenuButtons from './menuButtons';
 
 function Login() {
@@ -38,7 +37,7 @@ function Login() {
     axios(config)
       .then(response => {
         var status = response.data.message
-        const dd = response.data.roles[0]
+        const dd = response.data.roles
 
         if (status === "UserName or Password is Incorrect") {
           ReactDOM.render(
@@ -61,12 +60,6 @@ function Login() {
               <HomeScreen name={dd} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
-
-          ReactDOM.render(
-            <React.StrictMode>
-              <QuickGlance />
-            </React.StrictMode>,
-            document.getElementById('quickGlance'));
         }
       })
       .catch(function (error) {
@@ -76,7 +69,7 @@ function Login() {
   }
 
   return (
-    <div id="loginScreen" onSubmit={validateUser}>
+    <div id="loginScreen" onSubmit={validateUser} style={{maxWidth:"50%",marginLeft:"30%"}}>
       <form id="contact">
         <h3>Log In</h3>
         <fieldset>

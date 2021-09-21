@@ -1,11 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
-#loginScreen {
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-  padding-bottom: 10%;
-  margin-left: 33%;
-}
 
 #contact input[type="text"],
 #contact select,
