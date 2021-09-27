@@ -6,12 +6,13 @@ import "./css/taskCategorization.css"
 import axios from 'axios';
 
 
-function CreateTask() {
+function CreateTask(props) {
 
     const [taskDescription, setTaskDescription] = useState("");
     const [taskPriority, setTaskPriority] = useState("");
     const [taskDeadline, setTaskDeadline] = useState("");
     const [staffType, setStaffType] = useState("")
+    const [assigned, setAssigned] = useState("")
 
     const changeTaskDescription = (e) => {
         setTaskDescription(e.target.value);
@@ -27,6 +28,10 @@ function CreateTask() {
 
     const getStaffType = (e) => {
         setStaffType(e.target.value);
+    }
+
+    const changeAssignedTo = (e) => {
+        setAssigned(e.target.value);
     }
 
     const onNextClick = (e) => {
@@ -48,7 +53,9 @@ function CreateTask() {
         const transferrableData = {
             "task description": taskDescription,
             "task priority": taskPriority,
-            "task deadline": taskDeadline
+            "task deadline": taskDeadline,
+            "task assigned to": assigned,
+            "task assigned by": props.assignee
         }
 
         axios(config)
@@ -92,6 +99,7 @@ function CreateTask() {
                         <option value="teachingStaff">Teaching Staff</option>
                         <option value="nonTeachingStaff">Non-Teaching Staff</option>
                     </select>
+                    <input type="email" id="birthday" placeholder="Assigned To" onChange={changeAssignedTo} required />
                     <input type="submit" name="next" class="action-button" value="Next" />
                 </fieldset>
             </form>

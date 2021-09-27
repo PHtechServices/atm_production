@@ -17,7 +17,8 @@ function Login() {
     setPassword(e.target.value);
   }
 
-  const validateUser = () => {
+  const validateUser = (e) => {
+    e.preventDefault();
     const data = JSON.stringify({
       "userDetails": {
         "userName": userName,
@@ -37,12 +38,30 @@ function Login() {
     axios(config)
       .then(response => {
         var status = response.data.message
-        const dd = response.data.roles
+        const dd = response.data.uName
+        var mail = response.data.mailID[0]
+        var role = response.data.role
+        let cTask = true
+        let cUser = true
+        if (role === "SA" || role === "A") {
+          cTask = true
+          cUser = true
+        }
+        else if (role === "W") {
+          cTask = true
+          cUser = false
+        }
+        else {
+          cTask = false
+          cUser = false
+        }
+        
+        console.log(role)
 
         if (status === "UserName or Password is Incorrect") {
           ReactDOM.render(
             <React.StrictMode>
-              <HomeScreen name={dd} />
+              <HomeScreen name={dd} mail={mail} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
         }
@@ -50,14 +69,14 @@ function Login() {
         else {
           ReactDOM.render(
             <React.StrictMode>
-              <MenuButtons role={dd} />
+              <MenuButtons role={dd} mail={mail} cTask={cTask} cUser={cUser} name={dd}/>
             </React.StrictMode>,
             document.getElementById('root')
           );
 
           ReactDOM.render(
             <React.StrictMode>
-              <HomeScreen name={dd} />
+              <HomeScreen name={dd} mail={mail} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
         }
@@ -69,8 +88,8 @@ function Login() {
   }
 
   return (
-    <div id="loginScreen" onSubmit={validateUser} style={{maxWidth:"50%",marginLeft:"30%"}}>
-      <form id="contact">
+    <div id="loginScreen" style={{maxWidth:"50%",marginLeft:"30%"}}>
+      <form id="contact" onSubmit={validateUser}>
         <h3>Log In</h3>
         <fieldset>
           <input placeholder="User Name" type="text" tabindex="1" onChange={onUserChange} required autofocus />
@@ -78,8 +97,10 @@ function Login() {
         <fieldset>
           <input placeholder="Password" type="text" tabindex="2" onChange={onPassChange} required />
         </fieldset>
+        <fieldset>
+        <button type="submit">Submit</button>
+        </fieldset>
       </form>
-      <button type="submit" onClick={validateUser}>Submit</button>
     </div>
   );
 }

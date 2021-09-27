@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HomeScreen from './homeScreen';
 import "./css/taskCategorization.css"
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function CreateUser() {
     const [email, setEmail] = useState("");
@@ -66,12 +68,13 @@ function CreateUser() {
 
         axios(config)
             .then(function (response) {
-                // var status = response.data.message
-                // ReactDOM.render(
-                //     <React.StrictMode>
-                //         <HomeScreen name={status} />
-                //     </React.StrictMode>,
-                //     document.getElementById('dLogin'));
+                <alert></alert>
+                ReactDOM.render(
+                    <div class="alert alert-success" role="alert">
+                        User Successfully Created!!
+                    </div>,
+                    document.getElementById('dLogin')
+                );
             })
             .catch(function (error) {
                 console.log(error);
@@ -88,7 +91,17 @@ function CreateUser() {
                     <input type="text" id="password" placeholder="Initial Password" required onChange={get_password} />
                     <input type="text" id="address" placeholder="Complete Address" required onChange={get_address} />
                     <input type="text" id="phone" placeholder="Phone Number" required onChange={get_phone} />
-                    <input type="text" id="title" placeholder="Job Title" required onChange={get_title} />
+                    <select id="user-categorization" name="user-categorization" onChange={get_title} required>
+                        <option value="#">Select User Type:</option>
+                        <option value="dean">Dean</option>
+                        <option value="director">Director</option>
+                        <option value="principal">Principal</option>
+                        <option value="vicePrincipal">Vice Principal</option>
+                        <option value="studentCoordinator">Student Coordinator</option>
+                        <option value="teacherCoordinator">Teacher Coordinator</option>
+                        <option value="classTeacher">Class Teacher</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
                     <input type="submit" name="next" class="action-button" value="Submit" />
                 </fieldset>
             </form>

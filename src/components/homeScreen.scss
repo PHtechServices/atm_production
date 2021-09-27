@@ -9,24 +9,27 @@ body {
   line-height: 1.8;
 }
 
-img { height: auto; max-width: 100%; }
+#quote {
+	font-weight: 600;
+	font-size: 20px;
+	text-decoration: underline;
+}
+
+img { height: auto; max-width: 80%; margin-top: 0; }
 
 .button { background-color: #000000; border: 2px solid #000000; color: #ffffff; display: inline-block; font-size: 18px; font-weight: 600; margin: 0; padding: 12px 32px 14px 32px; text-decoration: none; text-transform: uppercase; }
 .button:hover { background-color: #ffffff; color: #000000; }
 
-.site-header { background-color: #FEDF9E; margin: 5%; }
-
-nav a { color: black; display: inline-block; margin: 0 4px; text-decoration: none; }
-nav a:first-child { margin: 0 4px 0 0; }
-
-main { margin: 0 5%; }
-
-.home-page { display: grid; font-size: 24px; grid-template-columns: 50% 50%; line-height: 1.4; margin: 2em auto 0 auto; max-width: 45em; padding: 0; }
+.home-page { display: grid; font-size: 24px; grid-template-columns: 50% 50%; line-height: 1.2;}
 .home-page h1 { font-size: 1em; margin: 4em 0 0 0; }
 .home-page .button { margin: 1em 0; }
 
 footer { background-color: #000000; color: rgba(255, 255, 255, 0.6); padding: 5%; }
 
-@media screen and (max-width: 1280px) {
+.intro {
+	font-size: 16px;
+}
+
+@media screen and (max-width: 45em) {
   .home-page { display: block; }
 }
