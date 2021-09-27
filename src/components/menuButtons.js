@@ -7,6 +7,8 @@ import CreateUser from './createUser';
 import "./menuButtons.css"
 import axios from 'axios';
 import TaskViewer from './js/tasksViewer';
+import Calendar from './js/calendar';
+import CalendarAPI from './js/calendar';
 
 function MenuButtons(props) {
   const createNewTask = (e) => {
@@ -28,56 +30,53 @@ function MenuButtons(props) {
   }
 
   const gotoHome = (e) => {
-    const data = JSON.stringify({
-      "assigned": "dmitahee"
-    });
+    // const data = JSON.stringify({
+    //   "assigned": "dmitahee"
+    // });
 
-    var config = {
-      method: 'POST',
-      url: 'http://127.0.0.1:5000/taskassign',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
+    // var config = {
+    //   method: 'POST',
+    //   url: 'http://127.0.0.1:5000/taskassign',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data: data
+    // };
 
-    axios(config)
-      .then(response => {
-        var description = response.data["data"]
-        const listItems = description.map((item) =>
-          <li className="nav-item has-treeview menu-open pb-3">
-              <i className="nav-icon fas fa-tachometer-alt"></i>
-              {item["task description"]}
-          </li>
-        );
-        ReactDOM.render(
-          <React.StrictMode>
-            <TaskViewer it={listItems} />
-          </React.StrictMode>,
-          document.getElementById('dLogin'));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(response => {
+    //     var description = response.data["data"]
+    //     const listItems = description.map((item) =>
+    //       <li className="nav-item has-treeview menu-open pb-3">
+    //           <i className="nav-icon fas fa-tachometer-alt"></i>
+    //           {item["task description"]}
+    //       </li>
+    //     );
+    //     ReactDOM.render(
+    //       <React.StrictMode>
+    //         <TaskViewer it={listItems} />
+    //       </React.StrictMode>,
+    //       document.getElementById('dLogin'));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+
+    ReactDOM.render(
+      <React.StrictMode>
+        <CalendarAPI />
+      </React.StrictMode>,
+      document.getElementById('dLogin'));
+
 
   }
 
   const createNewUser = (e) => {
-    console.log(props.role)
-    if (props.role === "Admin" || props.role === "Super Admin") {
-      ReactDOM.render(
-        <React.StrictMode>
-          <CreateUser />
-        </React.StrictMode>,
-        document.getElementById('dLogin'));
-    }
-    else {
-      ReactDOM.render(
-        <React.StrictMode>
-          <div>You are not authorized to create user</div>
-        </React.StrictMode>,
-        document.getElementById('dLogin'));
-    }
+    ReactDOM.render(
+      <React.StrictMode>
+        <CreateUser />
+      </React.StrictMode>,
+      document.getElementById('dLogin'));
   }
 
   return (

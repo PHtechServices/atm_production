@@ -45,12 +45,18 @@ function CreateTask() {
             data: data
         };
 
+        const transferrableData = {
+            "task description": taskDescription,
+            "task priority": taskPriority,
+            "task deadline": taskDeadline
+        }
+
         axios(config)
             .then(response => {
                 var staffList = response.data["staffList"]
                 ReactDOM.render(
                     <React.StrictMode>
-                        <TaskCategorization staffType={staffList} />
+                        <TaskCategorization staffType={staffList} transferrableData={transferrableData} />
                     </React.StrictMode>,
                     document.getElementById('dLogin')
                 );
@@ -80,7 +86,7 @@ function CreateTask() {
                         <option value="medium">Medium</option>
                         <option value="low">Low</option>
                     </select>
-                    <input type="date" id="birthday" name="Task Deadline" required onChange={changeTaskDeadline} required />
+                    <input type="date" id="birthday" name="Task Deadline" onChange={changeTaskDeadline} required />
                     <select id="task-categorization" name="task-categorization" onChange={getStaffType} required>
                         <option value="#">Select Staff Type</option>
                         <option value="teachingStaff">Teaching Staff</option>

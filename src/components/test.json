@@ -1,0 +1,84 @@
+{
+    "kind": "admin#directory#users",
+    "etag": "\"aaZqZyUft7xI3y3XMdPGtdJB-t_YjYHsS87YAfx4y1A/Dz8bVYFHEoe0OkvDmZs76h2NEcs\"",
+    "users": [
+        {
+            "kind": "admin#directory#user",
+            "id": "100622535990631221586",
+            "etag": "\"aaZqZyUft7xI3y3XMdPGtdJB-t_YjYHsS87YAfx4y1A/r0T6MNcZ-8NR9CYtk-vrN5ss51Y\"",
+            "primaryEmail": "accounts@keyoncompanies.com",
+            "name": {
+                "givenName": "accounts",
+                "familyName": "keyoncompanies",
+                "fullName": "accounts keyoncompanies"
+            },
+            "isAdmin": false,
+            "isDelegatedAdmin": false,
+            "lastLoginTime": "1970-01-01T00:00:00.000Z",
+            "creationTime": "2021-06-30T05:46:26.000Z",
+            "agreedToTerms": false,
+            "suspended": false,
+            "archived": false,
+            "changePasswordAtNextLogin": false,
+            "ipWhitelisted": false,
+            "emails": [
+                {
+                    "address": "accounts@keyoncompanies.com",
+                    "primary": true
+                },
+                {
+                    "address": "accounts@keyoncompanies.com.test-google-a.com"
+                }
+            ],
+            "nonEditableAliases": [
+                "accounts@keyoncompanies.com.test-google-a.com"
+            ],
+            "customerId": "C00nptnsa",
+            "orgUnitPath": "/",
+            "isMailboxSetup": true,
+            "isEnrolledIn2Sv": false,
+            "isEnforcedIn2Sv": false,
+            "includeInGlobalAddressList": true
+        },
+        {
+            "kind": "admin#directory#user",
+            "id": "107980024429883511823",
+            "etag": "\"aaZqZyUft7xI3y3XMdPGtdJB-t_YjYHsS87YAfx4y1A/Zr_4nBJnNnf15ElFvfqKBobw-h8\"",
+            "primaryEmail": "admin@keyoncompanies.com",
+            "name": {
+                "givenName": "Pavan",
+                "familyName": "Kumar",
+                "fullName": "Pavan Kumar"
+            },
+            "isAdmin": true,
+            "isDelegatedAdmin": false,
+            "lastLoginTime": "2021-09-20T04:22:55.000Z",
+            "creationTime": "2020-10-05T05:43:28.000Z",
+            "agreedToTerms": true,
+            "suspended": false,
+            "archived": false,
+            "changePasswordAtNextLogin": false,
+            "ipWhitelisted": false,
+            "emails": [
+                {
+                    "address": "admin@keyoncompanies.com",
+                    "primary": true
+                },
+                {
+                    "address": "admin@keyoncompanies.com.test-google-a.com"
+                }
+            ],
+            "nonEditableAliases": [
+                "admin@keyoncompanies.com.test-google-a.com"
+            ],
+            "customerId": "C00nptnsa",
+            "orgUnitPath": "/",
+            "isMailboxSetup": true,
+            "isEnrolledIn2Sv": true,
+            "isEnforcedIn2Sv": false,
+            "includeInGlobalAddressList": true,
+            "recoveryEmail": "r.pavankumar6666@gmail.com"
+        }
+    ],
+    "nextPageToken": "0a33f806acfbffffffff9e9b929691bf949a8690919c90928f9e91969a8cd19c9092ff00fefffec8c8c8cfcac8cec6cfc6cec9fffe100221b346550b02f34e6639000000000453f900480150005a0b09b8d5081d9d1604c4100360c695cb8406720608e4cfab8a06"
+}

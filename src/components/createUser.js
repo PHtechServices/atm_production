@@ -1,52 +1,57 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './loginScreen.css'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HomeScreen from './homeScreen';
+import "./css/taskCategorization.css"
 
 function CreateUser() {
-    const [userId, setUserId] = useState("");
-    const [user, setUser] = useState("");
-    const [Name, setName] = useState("");
-    const [Username, setUsername] = useState("");
-    const [Password, setPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [password, setPassword] = useState("");
+    const [address, setAddress] = useState("");
+    const [phone, setPhone] = useState("");
+    const [title, setTitle] = useState("");
 
-    const enterUID = (e) => {
-        setUserId(e.target.value);
+    const get_email = (e) => {
+        setEmail(e.target.value);
     }
 
-    const enterUser = (e) => {
-        setUser(e.target.value);
+    const get_firstName = (e) => {
+        setFirstName(e.target.value);
     }
 
-    const enterName = (e) => {
-        setName(e.target.value);
+    const get_lastName = (e) => {
+        setLastName(e.target.value);
     }
-
-    const enterUserName = (e) => {
-        setUsername(e.target.value);
-    }
-
-    const enterPassword = (e) => {
+    const get_password = (e) => {
         setPassword(e.target.value);
     }
 
-    const enterRole = (e) => {
-        setRole(e.target.value);
+    const get_address = (e) => {
+        setAddress(e.target.value);
     }
 
-    const createNewUser = () => {
+    const get_phone = (e) => {
+        setPhone(e.target.value);
+    }
 
+    const get_title = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const createNewUser = (e) => {
+        e.preventDefault();
         var data = JSON.stringify({
             "UserDetails": {
-                "userID": userId,
-                "userType": user,
-                "Name": Name,
-                "userName": Username,
-                "password": Password,
-                "userRole": role
+                "email": email,
+                "firstName": firstName,
+                "lastName": lastName,
+                "password": password,
+                "address": address,
+                "phone": phone,
+                "title": title
             }
         });
 
@@ -61,53 +66,32 @@ function CreateUser() {
 
         axios(config)
             .then(function (response) {
-                var status = response.data.message
-                ReactDOM.render(
-                    <React.StrictMode>
-                        <HomeScreen name={status} />
-                    </React.StrictMode>,
-                    document.getElementById('dLogin'));
+                // var status = response.data.message
+                // ReactDOM.render(
+                //     <React.StrictMode>
+                //         <HomeScreen name={status} />
+                //     </React.StrictMode>,
+                //     document.getElementById('dLogin'));
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
     return (
-        <div id="createUserScreen">
-            <form id="contact">
-                <h3>Create a New User</h3>
+        <div id="App">
+            <form id="msform" onSubmit={createNewUser}>
                 <fieldset>
-                    <input placeholder="User ID" onChange={enterUID} type="text" tabindex="1" required autofocus />
-                </fieldset>
-                <fieldset>
-                    <input placeholder="Name" onChange={enterName} type="text" tabindex="1" required autofocus />
-                </fieldset>
-                <fieldset>
-                    <select placeholder="User Type" onChange={enterUser} name="cars" id="cars">
-                        <option value="Please Select">Select User Type:</option>
-                        <option value="Teacher">Teacher</option>
-                        <option value="Principal">Principal</option>
-                        <option value="Director">Director</option>
-                        <option value="Dean">Dean</option>
-                    </select>
-                </fieldset>
-                <fieldset>
-                    <input placeholder="Unique User Name" onChange={enterUserName} type="text" tabindex="1" required autofocus />
-                </fieldset>
-                <fieldset>
-                    <input placeholder="Password" onChange={enterPassword} type="text" tabindex="2" required />
-                </fieldset>
-                <fieldset>
-                    <select placeholder="User Type" onChange={enterRole} name="cars" id="cars">
-                        <option value="Please Select">Select User Role:</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Super Admin">Super Admin</option>
-                        <option value="Read">Read</option>
-                        <option value="Write">Write</option>
-                    </select>
+                    <h2 class="fs-title">Create a New User</h2>
+                    <input type="text" id="email" placeholder="Email ID" required autofocus onChange={get_email} />
+                    <input type="text" id="name" placeholder="First Name" required onChange={get_firstName} />
+                    <input type="text" id="name" placeholder="Last Name" required onChange={get_lastName} />
+                    <input type="text" id="password" placeholder="Initial Password" required onChange={get_password} />
+                    <input type="text" id="address" placeholder="Complete Address" required onChange={get_address} />
+                    <input type="text" id="phone" placeholder="Phone Number" required onChange={get_phone} />
+                    <input type="text" id="title" placeholder="Job Title" required onChange={get_title} />
+                    <input type="submit" name="next" class="action-button" value="Submit" />
                 </fieldset>
             </form>
-                    <button type="submit" onClick={createNewUser}>Submit</button>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import './index.css';
 import Login from './components/loginScreen'
 import reportWebVitals from './reportWebVitals';
 import MenuButtons from './components/menuButtons';
+import HomeScreen from './components/homeScreen'
 
 ReactDOM.render(
   <React.StrictMode>
