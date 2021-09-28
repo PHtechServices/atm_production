@@ -1,5 +1,9 @@
 import config
 import hashlib
+from googleapiclient.discovery import build
+# from google_auth_oauthlib.flow import InstalledAppFlow
+# from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 
 def userNameCheck(userName):
     uName = []
@@ -24,7 +28,7 @@ def task_assigned(assigned):
         if assigned == doc["task assigned to"]:
             data.append(doc["task description"])
             tbd = "Success"
-        return tbd, data
+    return tbd, data
 
 
 def task_approver(approver):
@@ -34,6 +38,7 @@ def task_approver(approver):
             data1.append(doc["task"])
             ok = "Success"
             return ok, data1
+
 
 def getStaffType(staffType):
     staffList = []
@@ -49,18 +54,28 @@ def getResponsibilities(department):
         if department == doc["department"]:
             responsibilities = doc["responsibilities"]
             return(responsibilities)
-        
+
+
 def createCalendarEvent(req_data):
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+    creds = None
+    creds = Credentials.from_authorized_user_file(f"token.json", SCOPES)
+    service = build('calendar', 'v3', credentials=creds)
     config.eventTemplate["description"] = req_data["task description"]
     config.eventTemplate["summary"] = req_data["task description"]
-    config.eventTemplate["start"]["dateTime"] = req_data["task deadline"]+"T09:00:00-07:00"
-    config.eventTemplate["end"]["dateTime"] = req_data["task deadline"]+"T09:00:00-07:00"
-    event = service.events().insert(calendarId='primary', body=config.eventTemplate).execute()
-    print( 'Event created: %s' % (event.get('htmlLink')))
+    config.eventTemplate["start"]["dateTime"] = req_data["task deadline"] + \
+        "T09:00:00-07:00"
+    config.eventTemplate["end"]["dateTime"] = req_data["task deadline"] + \
+        "T09:00:00-07:00"
+    event = service.events().insert(calendarId='primary',
+                                    body=config.eventTemplate).execute()
+    print('Event created: %s' % (event.get('htmlLink')))
+
 
 def sha(password):
     result = hashlib.sha1(password.encode())
     return result.hexdigest()
+
 
 def fetchrole(email):
     for i in config.collection.find():

@@ -4,22 +4,14 @@ from pymongo import MongoClient
 from flask import jsonify, request, Flask
 from flask_cors import CORS
 import flask
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
 from utils.utils import *
 
 app = Flask(__name__)
 CORS(app)
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-creds = None
-creds = Credentials.from_authorized_user_file(f"token.json", SCOPES)
 # If there are no (valid) credentials available, let the user log in.
-service = build('calendar', 'v3', credentials=creds)
 
 @app.route("/login", methods=['POST'])
 def loginTest():

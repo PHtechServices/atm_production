@@ -11,6 +11,7 @@ import Calendar from './js/calendar';
 import CalendarAPI from './js/calendar';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import UpdateTasks from './js/updateTasks';
 
 
 function MenuButtons(props) {
@@ -52,6 +53,15 @@ function MenuButtons(props) {
     );
   }
 
+  const viewCalendar = (e) => {
+    ReactDOM.render(
+      <React.StrictMode>
+        <UpdateTasks />
+      </React.StrictMode>,
+      document.getElementById('dLogin')
+    );
+  }
+
   const viewTasks = (e) => {
     const mail = props.mail
     console.log(mail)
@@ -71,11 +81,13 @@ function MenuButtons(props) {
     axios(config)
       .then(response => {
         var description = response.data["data"]
+        console.log(description)
         const listItems = description.map((item) =>
           <li className="nav-item has-treeview menu-open pb-3">
             <i className="nav-icon fas fa-tachometer-alt"></i>
             <li class="tick">{item}</li>
           </li>
+          
         );
         ReactDOM.render(
           <React.StrictMode>
@@ -105,7 +117,7 @@ function MenuButtons(props) {
           <a class="nav-link" href="#" onClick={viewTasks}><h6>View Tasks</h6></a>
         </li>
         <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#"><h6>Admin</h6></a>
+          <a class="nav-link" href="#" onClick={viewCalendar}><h6>Admin</h6></a>
         </li>
       </ul>
     </nav>
