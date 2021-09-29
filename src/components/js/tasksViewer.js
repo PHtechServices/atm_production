@@ -1,24 +1,21 @@
 import React from 'react';
 import "../css/taskViewer.css"
 import CalendarAPI from './calendar';
+import UpdateTasks from './updateTasks';
+import ReactDOM from 'react-dom';
 
 function TaskViewer(props) {
 
+    const openTaskUpdater = () => {
+        ReactDOM.render(
+            <React.StrictMode>
+                <UpdateTasks />
+            </React.StrictMode>,
+            document.getElementById('dLogin')
+        );
+    }
+
     return (
-        // <div id="task">
-        //             <div class="list">
-
-        //                 <h3>My Tasks</h3>
-
-        //                 <ul class="featureList">
-        //                     {props.it}
-        //                 </ul>
-
-
-
-        //             </div>
-        // </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-sm">
@@ -31,7 +28,7 @@ function TaskViewer(props) {
                     <div class="col-sm featureList">
                         <h3>Upcoming Tasks</h3>
                         <ul>
-                            <li>Task A</li>
+                            <li onClick={openTaskUpdater}>Task A</li>
                             <li>Task B</li>
                             <li>Task C</li>
                             <li>Task A</li>

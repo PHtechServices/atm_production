@@ -90,7 +90,8 @@ function Login() {
   return (
     <div id="loginScreen" style={{maxWidth:"50%",marginLeft:"30%"}}>
       <form id="contact" onSubmit={validateUser}>
-        <h3>Log In</h3>
+        <h3>admin@srishtiworldschools.in</h3>
+        <h3>admin@admin</h3>
         <fieldset>
           <input placeholder="User Name" type="text" tabindex="1" onChange={onUserChange} required autofocus />
         </fieldset>

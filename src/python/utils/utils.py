@@ -4,6 +4,9 @@ from googleapiclient.discovery import build
 # from google_auth_oauthlib.flow import InstalledAppFlow
 # from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from bson import ObjectId
+import requests
+import json
 
 def userNameCheck(userName):
     uName = []
@@ -85,3 +88,49 @@ def fetchrole(email):
         if user == j["users"][0]:
             role = (j["role"])
             return(role)
+
+def getstatus(taskID):
+    data = {}
+    for i in config.collection1.find():
+        if taskID == i["_id"]:
+            status = i["task status"]
+            break
+    for j in config.collectionStatus.find():
+        if status == j["title"]:
+            data["componentsInput"] = j["componentsInput"]
+            data["title"] = j["title"]
+            data["componentsButtons"] = j["componentsButtons"]
+            data["componentsUpload"] = j["componentsUpload"]
+            data["message"] = j["message"]
+            data["buttonValue"] = j["buttonValue"]
+            break
+    return status, data
+
+def editjson(obj, newMsg, key):
+    url = "http://127.0.0.1:5000/getjson"
+
+    payload = json.dumps({
+    "objid": "6152f2c8a4108f019de6a328"
+    })
+    headers = {
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    old = response.json()["json"]
+    new = response.json()["json"]
+
+    new[key] = newMsg
+    for i in config.collection1.find():
+        if obj == i["_id"]:
+            edit = config.collection1.replace_one(old,new)          
+    return edit
+
+def getJson(objid):
+    data={}
+    for i in config.collection1.find():
+        if objid == i["_id"]:
+            for key, value in i.items():
+                if key not in ["_id"]:
+                    data[key]=value
+            return data

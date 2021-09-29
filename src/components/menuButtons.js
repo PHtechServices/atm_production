@@ -29,7 +29,7 @@ function MenuButtons(props) {
 
     ReactDOM.render(
       <React.StrictMode>
-        <HomeScreen name={props.name}/>
+        <HomeScreen name={props.name} />
       </React.StrictMode>,
       document.getElementById('dLogin'));
 
@@ -54,12 +54,33 @@ function MenuButtons(props) {
   }
 
   const viewCalendar = (e) => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <UpdateTasks />
-      </React.StrictMode>,
-      document.getElementById('dLogin')
-    );
+    const id = "6152f2c8a4108f019de6a328"
+    const data = JSON.stringify({
+      "taskID": id
+    });
+
+    var config = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/taskstatus',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(response => {
+        var componentsInput = response.data["data"]
+        console.log(componentsInput)
+        ReactDOM.render(
+          <React.StrictMode>
+            <UpdateTasks componentsInput={componentsInput} />
+          </React.StrictMode>,
+          document.getElementById('dLogin'));
+        })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   const viewTasks = (e) => {
@@ -87,7 +108,7 @@ function MenuButtons(props) {
             <i className="nav-icon fas fa-tachometer-alt"></i>
             <li class="tick">{item}</li>
           </li>
-          
+
         );
         ReactDOM.render(
           <React.StrictMode>

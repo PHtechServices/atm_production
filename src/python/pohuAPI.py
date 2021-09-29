@@ -5,13 +5,11 @@ from flask import jsonify, request, Flask
 from flask_cors import CORS
 import flask
 from utils.utils import *
+from bson import ObjectId
 
 app = Flask(__name__)
 CORS(app)
 
-# If modifying these scopes, delete the file token.json.
-
-# If there are no (valid) credentials available, let the user log in.
 
 @app.route("/login", methods=['POST'])
 def loginTest():
@@ -38,7 +36,6 @@ def loginTest():
                         "role": "Not Defined"})
 
 
-# Create User
 @app.route("/createuser", methods=['POST'])
 def insert_document():
     req_data = request.get_json()["UserDetails"]
@@ -65,8 +62,6 @@ def insert_document():
     config.collection.insert_one(config.userDetailsTemplate).inserted_id
     return jsonify({"message": "Congratualtions user inserted Sucessfully..."})
 
-# Create task
-
 
 @app.route("/creattask", methods=['POST'])
 def task():
@@ -74,8 +69,6 @@ def task():
     config.collection1.insert_one(req_data).inserted_id
     message = createCalendarEvent(req_data)
     return jsonify({"message": "Task created Sucessfully..."})
-
-# task_Assign
 
 
 @app.route("/taskassign", methods=['POST'])
@@ -88,8 +81,6 @@ def task_assign():
         return jsonify({"message": "tasks are assigned", "data": data})
     else:
         return jsonify({"message": "tasks are not assigned"})
-
-# task_Approve
 
 
 @app.route("/taskapprove", methods=['POST'])
@@ -104,17 +95,11 @@ def taskapproved():
         return jsonify({"message": "tasks are not assigned"})
 
 
-
-
-
 @app.route("/staffDetails", methods=['POST'])
 def getStaffDetails():
     staffType = request.get_json()["staffType"]
     staffList = getStaffType(staffType)
     return jsonify({"staffList": staffList})
-
-
-
 
 
 @app.route("/department", methods=['POST'])
@@ -123,12 +108,27 @@ def getDepartment():
     responsibilities = getResponsibilities(department)
     return jsonify({"responsibilities": responsibilities})
 
-# def createCalendarEvent(req_data):
-#     config.eventTemplate["description"] = req_data["task description"]
-#     config.eventTemplate["summary"] = req_data["task description"]
-#     config.eventTemplate["start"]["dateTime"] = req_data["task deadline"]+"T09:00:00-07:00"
-#     config.eventTemplate["end"]["dateTime"] = req_data["task deadline"]+"T09:00:00-07:00"
-#     event = service.events().insert(calendarId='primary', body=config.eventTemplate).execute()
-#     print( 'Event created: %s' % (event.get('htmlLink')))
+@app.route("/taskstatus", methods=['POST'])
+def updateTasks():
+    taskID = request.get_json("taskID")
+    status, data = getstatus(ObjectId(taskID["taskID"]))
+    print(status, data)
+    return jsonify({"status":status, "data":data})
+
+@app.route("/getjson", methods=['POST'])
+def gets():
+    objid = request.get_json("objid")
+    reqJson = getJson(ObjectId(objid["objid"]))
+    return jsonify({"message":"json retrived","json":eval(str(reqJson))})
+
+@app.route("/edit", methods=["POST"])
+def ej():
+    response = request.get_json()
+    key = response["key"]
+    oid = response["objid"]
+    msg = response["message"]
+    editj = editjson(ObjectId(oid), msg, key)
+    return(jsonify({"message":repr(editj)}))
+
 
 app.run(debug=True)
