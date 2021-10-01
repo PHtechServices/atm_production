@@ -76,9 +76,6 @@ function CreateUser() {
                     document.getElementById('dLogin')
                 );
             })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
     return (
         <div id="App">

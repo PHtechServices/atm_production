@@ -10,7 +10,7 @@ function UpdateTasks(props) {
         <div class="container">
             <div class="row">
                 <div class="col-sm-5 taskPage">
-                    <FirstPage componentsInput={props.componentsInput} />
+                    <FirstPage componentsInput={props.componentsInput} mail={props.mail}/>
                 </div>
                 <div class="col-sm-7">
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css' />

@@ -33,7 +33,6 @@ function TaskCategorization(props) {
     }
 
     const submitForm = (e) => {
-        console.log(transferrableData)
         e.preventDefault();
         transferrableData["task responsibility"] = taskResponsibility
         transferrableData["task department"] = taskDepartment
@@ -50,14 +49,6 @@ function TaskCategorization(props) {
             },
             data: data
         };
-
-        axios(config)
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     const onSubmitClick = (e) => {
@@ -77,16 +68,12 @@ function TaskCategorization(props) {
 
         axios(config)
             .then(response => {
-                console.log(response.data)
                 var responsibility = response.data["responsibilities"]
                 const x = responsibility.map((item) =>
                 <option value={item}>{item}</option>);
                 setResItems(x)
 
             })
-            .catch(function (error) {
-                console.log(error);
-            });
 
 
     }

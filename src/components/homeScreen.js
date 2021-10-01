@@ -14,7 +14,6 @@ function HomeScreen(props) {
   const viewTasks = (e) => {
     e.preventDefault();
     const mail = props.mail
-    console.log(mail)
     const data = JSON.stringify({
       "assigned": mail
     });
@@ -43,9 +42,6 @@ function HomeScreen(props) {
           </React.StrictMode>,
           document.getElementById('dLogin'));
       })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
 
   return (

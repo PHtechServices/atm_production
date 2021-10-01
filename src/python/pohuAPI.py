@@ -17,7 +17,6 @@ def loginTest():
     userName, uName, mailID = userNameCheck(details["userName"])
     passwordN = passwordCheck(details["password"])
     role = fetchrole(mailID[0])
-    print(role)
     if userName == "Success":
         if passwordN == "Success":
             return jsonify({"message": "Congratualtion for Login",
@@ -57,8 +56,6 @@ def insert_document():
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
-    print(response.text)
-
     config.collection.insert_one(config.userDetailsTemplate).inserted_id
     return jsonify({"message": "Congratualtions user inserted Sucessfully..."})
 
@@ -74,9 +71,7 @@ def task():
 @app.route("/taskassign", methods=['POST'])
 def task_assign():
     assignee = request.get_json()
-    print(assignee)
     assign, data = task_assigned(assignee["assigned"])
-    print(assign)
     if assign == "Success":
         return jsonify({"message": "tasks are assigned", "data": data})
     else:
@@ -86,9 +81,7 @@ def task_assign():
 @app.route("/taskapprove", methods=['POST'])
 def taskapproved():
     approver = request.get_json()
-    print(approver)
     approve, data1 = task_approver(approver["assigned"])
-    print(approve)
     if approve == "Success":
         return jsonify({"message": "tasks are assigned", "data": data1})
     else:
@@ -112,7 +105,6 @@ def getDepartment():
 def updateTasks():
     taskID = request.get_json("taskID")
     status, data = getstatus(ObjectId(taskID["taskID"]))
-    print(status, data)
     return jsonify({"status":status, "data":data})
 
 @app.route("/getjson", methods=['POST'])

@@ -55,8 +55,6 @@ function Login() {
           cTask = false
           cUser = false
         }
-        
-        console.log(role)
 
         if (status === "UserName or Password is Incorrect") {
           ReactDOM.render(
@@ -81,9 +79,6 @@ function Login() {
             document.getElementById('dLogin'));
         }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
 
   }
 

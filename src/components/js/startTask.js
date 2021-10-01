@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import HomeScreen from '../homeScreen';
+import TaskViewer from './tasksViewer';
 
 function FirstPage(props) {
     const [startTaskPage, setStartTaskPage] = useState({
@@ -45,14 +46,37 @@ function FirstPage(props) {
                         "message": props.componentsInput["message"],
                         "buttonValue": props.componentsInput["buttonValue"]
                     })
-                    ReactDOM.render(
-                        <div><h2>Task Created Successfully</h2>
-                        </div>,
-                        document.getElementById('dLogin'));
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                    const mail = props.mail
+                    const data = JSON.stringify({
+                        "assigned": mail
+                    });
+
+                    var config = {
+                        method: 'POST',
+                        url: 'http://127.0.0.1:5000/taskassign',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+
+                    axios(config)
+                        .then(response => {
+                            var description = response.data["data"]
+                            const listItems = description.map((item) =>
+                                <li className="nav-item has-treeview menu-open pb-3">
+                                    <i className="nav-icon fas fa-tachometer-alt"></i>
+                                    <li class="tick">{item}</li>
+                                </li>
+
+                            );
+                            ReactDOM.render(
+                                <React.StrictMode>
+                                    <TaskViewer it={listItems} />
+                                </React.StrictMode>,
+                                document.getElementById('dLogin'));
+                        })
+                })      
 
         }
         else if (startTaskPage["title"] === "Update Task Status"){
@@ -81,15 +105,37 @@ function FirstPage(props) {
                             "message": props.componentsInput["message"],
                             "buttonValue": props.componentsInput["buttonValue"]
                         })
-                        ReactDOM.render(
-                            <div><h2>Task Created Successfully</h2>
-                            </div>,
-                            document.getElementById('dLogin'));
-                    })
-                    .catch(function (error) {
-                        console.log(error);
+                        const mail = props.mail
+                    const data = JSON.stringify({
+                        "assigned": mail
                     });
 
+                    var config = {
+                        method: 'POST',
+                        url: 'http://127.0.0.1:5000/taskassign',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+
+                    axios(config)
+                        .then(response => {
+                            var description = response.data["data"]
+                            const listItems = description.map((item) =>
+                                <li className="nav-item has-treeview menu-open pb-3">
+                                    <i className="nav-icon fas fa-tachometer-alt"></i>
+                                    <li class="tick">{item}</li>
+                                </li>
+
+                            );
+                            ReactDOM.render(
+                                <React.StrictMode>
+                                    <TaskViewer it={listItems} />
+                                </React.StrictMode>,
+                                document.getElementById('dLogin'));
+                        })
+                })
         }
         else if(startTaskPage["title"] === "Task Completed Successfully"){
             ReactDOM.render(

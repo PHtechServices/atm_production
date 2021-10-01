@@ -54,6 +54,7 @@ function MenuButtons(props) {
   }
 
   const viewCalendar = (e) => {
+    const mail = props.mail
     const id = "6152f2c8a4108f019de6a328"
     const data = JSON.stringify({
       "taskID": id
@@ -71,21 +72,18 @@ function MenuButtons(props) {
     axios(config)
       .then(response => {
         var componentsInput = response.data["data"]
-        console.log(componentsInput)
         ReactDOM.render(
           <React.StrictMode>
-            <UpdateTasks componentsInput={componentsInput} />
+            <UpdateTasks componentsInput={componentsInput} mail={mail} />
           </React.StrictMode>,
           document.getElementById('dLogin'));
-        })
+      })
       .catch(function (error) {
-        console.log(error);
       });
   }
 
   const viewTasks = (e) => {
     const mail = props.mail
-    console.log(mail)
     const data = JSON.stringify({
       "assigned": mail
     });
@@ -102,23 +100,13 @@ function MenuButtons(props) {
     axios(config)
       .then(response => {
         var description = response.data["data"]
-        console.log(description)
-        const listItems = description.map((item) =>
-          <li className="nav-item has-treeview menu-open pb-3">
-            <i className="nav-icon fas fa-tachometer-alt"></i>
-            <li class="tick">{item}</li>
-          </li>
-
-        );
+        
         ReactDOM.render(
           <React.StrictMode>
-            <TaskViewer it={listItems} />
+            <TaskViewer it={description} />
           </React.StrictMode>,
           document.getElementById('dLogin'));
       })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
 
   return (

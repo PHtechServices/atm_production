@@ -25,11 +25,11 @@ def passwordCheck(password):
 
 
 def task_assigned(assigned):
-    data = []
+    data = {}
+    id = []
     for doc in config.collection1.find():
-        print(doc)
         if assigned == doc["task assigned to"]:
-            data.append(doc["task description"])
+            data[doc["task description"]] = str(doc["_id"])
             tbd = "Success"
     return tbd, data
 
