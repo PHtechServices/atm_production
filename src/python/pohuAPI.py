@@ -71,9 +71,9 @@ def task():
 @app.route("/taskassign", methods=['POST'])
 def task_assign():
     assignee = request.get_json()
-    assign, data = task_assigned(assignee["assigned"])
+    assign, data, id = task_assigned(assignee["assigned"])
     if assign == "Success":
-        return jsonify({"message": "tasks are assigned", "data": data})
+        return jsonify({"message": "tasks are assigned", "data": data, "populator": id})
     else:
         return jsonify({"message": "tasks are not assigned"})
 
@@ -119,8 +119,15 @@ def ej():
     key = response["key"]
     oid = response["objid"]
     msg = response["message"]
-    editj = editjson(ObjectId(oid), msg, key)
+    print(oid)
+    editj = editjson(oid, msg, key)
     return(jsonify({"message":repr(editj)}))
+
+@app.route("/delete_collec", methods=['POST'])
+def delete_collection():
+    req_data = request.get_json()
+    temp = deletecollection(req_data)
+    return jsonify({"message":"Collection Deleted"})
 
 
 app.run(debug=True)

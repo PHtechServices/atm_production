@@ -16,18 +16,22 @@ function FirstPage(props) {
         "buttonValue": props.componentsInput["buttonValue"]
     });
     const [status, setStatus] = useState("")
+    const pop = props.pop
+    const id = props.id
+    console.log(props.mail)
+    console.log(pop[id][0])
 
     const changeScreen = (e) => {
         e.preventDefault();
         if (startTaskPage["title"] === "Start Task") {
             setStatus("Update Task")
             const data = JSON.stringify({
-                "objid":"6152f2c8a4108f019de6a328",
+                "objid": props.id,
                 "message": "Update Task Status",
                 "key": "task status"
             }
             );
-    
+
             var config = {
                 method: 'POST',
                 url: 'http://127.0.0.1:5000/edit',
@@ -63,49 +67,43 @@ function FirstPage(props) {
                     axios(config)
                         .then(response => {
                             var description = response.data["data"]
-                            const listItems = description.map((item) =>
-                                <li className="nav-item has-treeview menu-open pb-3">
-                                    <i className="nav-icon fas fa-tachometer-alt"></i>
-                                    <li class="tick">{item}</li>
-                                </li>
-
-                            );
+                            var pop = response.data["populator"]
                             ReactDOM.render(
                                 <React.StrictMode>
-                                    <TaskViewer it={listItems} />
+                                    <TaskViewer it={description} pop={pop} const mail={props.mail} />
                                 </React.StrictMode>,
                                 document.getElementById('dLogin'));
                         })
-                })      
+                })
 
         }
-        else if (startTaskPage["title"] === "Update Task Status"){
-                const data = JSON.stringify({
-                    "objid":"6152f2c8a4108f019de6a328",
-                    "message": "Task Completed Successfully",
-                    "key": "task status"
-                }
-                );
-        
-                var config = {
-                    method: 'POST',
-                    url: 'http://127.0.0.1:5000/edit',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: data
-                };
-                axios(config)
-                    .then(response => {
-                        setStartTaskPage({
-                            "title": props.componentsInput["title"],
-                            "componentsInput": props.componentsInput["componentsInput"],
-                            "componentsButtons": props.componentsInput["componentsButtons"],
-                            "componentsUpload": props.componentsInput["componentsUpload"],
-                            "message": props.componentsInput["message"],
-                            "buttonValue": props.componentsInput["buttonValue"]
-                        })
-                        const mail = props.mail
+        else if (startTaskPage["title"] === "Update Task Status") {
+            const data = JSON.stringify({
+                "objid": "6152f2c8a4108f019de6a328",
+                "message": "Task Completed Successfully",
+                "key": "task status"
+            }
+            );
+
+            var config = {
+                method: 'POST',
+                url: 'http://127.0.0.1:5000/edit',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+            axios(config)
+                .then(response => {
+                    setStartTaskPage({
+                        "title": props.componentsInput["title"],
+                        "componentsInput": props.componentsInput["componentsInput"],
+                        "componentsButtons": props.componentsInput["componentsButtons"],
+                        "componentsUpload": props.componentsInput["componentsUpload"],
+                        "message": props.componentsInput["message"],
+                        "buttonValue": props.componentsInput["buttonValue"]
+                    })
+                    const mail = props.mail
                     const data = JSON.stringify({
                         "assigned": mail
                     });
@@ -122,33 +120,29 @@ function FirstPage(props) {
                     axios(config)
                         .then(response => {
                             var description = response.data["data"]
-                            const listItems = description.map((item) =>
-                                <li className="nav-item has-treeview menu-open pb-3">
-                                    <i className="nav-icon fas fa-tachometer-alt"></i>
-                                    <li class="tick">{item}</li>
-                                </li>
-
-                            );
+                            var pop = response.data["populator"]
                             ReactDOM.render(
                                 <React.StrictMode>
-                                    <TaskViewer it={listItems} />
+                                    <TaskViewer it={description} pop={pop} const mail={props.mail} />
                                 </React.StrictMode>,
                                 document.getElementById('dLogin'));
                         })
                 })
         }
-        else if(startTaskPage["title"] === "Task Completed Successfully"){
+        else if (startTaskPage["title"] === "Task Completed Successfully") {
             ReactDOM.render(
                 <React.StrictMode>
-                  <HomeScreen name={props.name} />
+                    <HomeScreen name={props.name} />
                 </React.StrictMode>,
                 document.getElementById('dLogin')
-              );
+            );
         }
     }
-    
-    const listUpdateTaskPageInputs = startTaskPage["componentsInput"].map((item) =>
-        <input type="text" name="email" placeholder={item} readOnly />
+    console.log(props)
+    const listUpdateTaskPageInputs = startTaskPage["componentsInput"].map((item, index) =>
+        <label>{item}
+            <input type="text" name="email" placeholder={pop[id][index]} readOnly /></label>
+
     );
     const listUpdateTaskPageUpload = startTaskPage["componentsUpload"].map((item) =>
         <input type="file" name="email" placeholder={item} readOnly />

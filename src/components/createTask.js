@@ -55,7 +55,9 @@ function CreateTask(props) {
             "task priority": taskPriority,
             "task deadline": taskDeadline,
             "task assigned to": assigned,
-            "task assigned by": props.assignee
+            "task assigned by": props.assignee,
+            "task type": staffType,
+            "task status": "Start Task"
         }
 
         axios(config)

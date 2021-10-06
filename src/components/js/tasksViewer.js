@@ -1,17 +1,57 @@
 import React from 'react';
-import "../css/taskViewer.css"
+import "../css/taskViewer.scss"
 import CalendarAPI from './calendar';
 import UpdateTasks from './updateTasks';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
+import EditTask from './editTask';
 function TaskViewer(props) {
+
+    const openTaskEditor = (e) => {
+        var inputPlaceholder = []
+
+    {
+        const id = e.target.id
+        console.log(id)
+        const data = JSON.stringify({
+            "objid": id
+        });
+
+        var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/getjson',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(response => {
+                const test = response.data["json"]
+                const listItems = Object.keys(test).map((key, index) => (
+                    inputPlaceholder.push(test[key])
+                ))
+                console.log(inputPlaceholder)
+                ReactDOM.render(
+                  <React.StrictMode>
+                    <EditTask inputPlaceholder={inputPlaceholder} id={id}/>
+                  </React.StrictMode>,
+                  document.getElementById('dLogin'));
+            })
+            .catch(function (error) {
+                console.log("error")
+            });
+    }
+    }
 
     const openTaskUpdater = (e) => {
 
         const mail = props.mail
+        console.log(mail)
         const id = e.target.id
-        console.log(id)
+        const pop = props.pop
+        console.log(pop)
         const data = JSON.stringify({
             "taskID": id
         });
@@ -30,7 +70,7 @@ function TaskViewer(props) {
                 var componentsInput = response.data["data"]
                 ReactDOM.render(
                     <React.StrictMode>
-                        <UpdateTasks componentsInput={componentsInput} mail={mail} />
+                        <UpdateTasks componentsInput={componentsInput} mail={mail} pop={pop} id={id} />
                     </React.StrictMode>,
                     document.getElementById('dLogin'));
             })
@@ -39,10 +79,11 @@ function TaskViewer(props) {
     }
     const description = props.it
     const listItems = Object.keys(description).map((key, index) => (
-        <li className="nav-item has-treeview menu-open pb-3">
-            <i className="nav-icon fas fa-tachometer-alt"></i>
-            <li class="tick"><a href="#" id={description[key]} onClick={openTaskUpdater}>{key}</a></li>
-        </li>
+        <tr>
+            <td class="tick"><label id={description[key]}>{key}</label></td>
+            <td><button id={description[key]} onClick={openTaskEditor} class="offset">Edit</button></td>
+            <td><button id={description[key]} onClick={openTaskUpdater} class="offset">Update</button></td>
+        </tr>
     ))
 
     return (
@@ -51,27 +92,27 @@ function TaskViewer(props) {
                 <div class="col-sm">
                     <div class="col-sm featureList">
                         <h3>Active Tasks</h3>
-                        <ul>
+                        <table style={{ width: "350px" }} class="table table-bordered table-hover">
                             {listItems}
-                        </ul>
+                        </table>
                     </div>
                     <div class="col-sm featureList">
                         <h3>Upcoming Tasks</h3>
-                        <ul>
+                        <table style={{ width: "350px" }} class="table table-bordered table-hover">
                             {listItems}
-                        </ul>
+                        </table>
                     </div>
                     <div class="col-sm featureList">
                         <h3>Backlog</h3>
-                        <ul>
+                        <table style={{ width: "350px" }} class="table table-bordered table-hover">
                             {listItems}
-                        </ul>
+                        </table>
                     </div>
                     <div class="col-sm featureList">
                         <h3>Urgent Tasks</h3>
-                        <ul>
+                        <table style={{ width: "350px" }} class="table table-bordered table-hover">
                             {listItems}
-                        </ul>
+                        </table>
                     </div>
                 </div>
                 <div class="col-sm">

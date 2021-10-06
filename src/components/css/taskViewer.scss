@@ -1,0 +1,65 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+h3 { color: rgb(0, 0, 0) }
+
+.featureList {
+    font-size: 12px;
+    line-height: 1;
+    font-family: 'Roboto', 'sans-serif';
+}
+
+.featureList {
+  margin-top: 40px;
+}
+
+h2 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.table-bordered tr td {
+  border: 2px solid black;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    display: none;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+
+.offset:hover,
+.offset:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+//=== Set button colors
+// If you wonder why use Sass vars or CSS custom properties...
+  // Make a map with the class names and matching colors
+$colors: (  
+  offset: #ffa260
+);
+
+button {  
+  color: var(--color);
+  transition: 0.25s;
+  
+  &:hover,
+  &:focus { 
+    border-color: var(--hover);
+    color: rgb(65, 65, 65);
+  }
+  font-size: x-small;
+}
+
+// Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.

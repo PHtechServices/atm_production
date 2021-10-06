@@ -12,6 +12,7 @@ import CalendarAPI from './js/calendar';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import UpdateTasks from './js/updateTasks';
+import EditTask from './js/editTask';
 
 
 function MenuButtons(props) {
@@ -54,32 +55,40 @@ function MenuButtons(props) {
   }
 
   const viewCalendar = (e) => {
-    const mail = props.mail
-    const id = "6152f2c8a4108f019de6a328"
-    const data = JSON.stringify({
-      "taskID": id
-    });
+    var inputPlaceholder = []
 
-    var config = {
-      method: 'POST',
-      url: 'http://127.0.0.1:5000/taskstatus',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
+    {
+        const id = "615bedcbe414a11c3b3a7c66"
+        const data = JSON.stringify({
+            "objid": id
+        });
 
-    axios(config)
-      .then(response => {
-        var componentsInput = response.data["data"]
-        ReactDOM.render(
-          <React.StrictMode>
-            <UpdateTasks componentsInput={componentsInput} mail={mail} />
-          </React.StrictMode>,
-          document.getElementById('dLogin'));
-      })
-      .catch(function (error) {
-      });
+        var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/getjson',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(response => {
+                const test = response.data["json"]
+                const listItems = Object.keys(test).map((key, index) => (
+                    inputPlaceholder.push(test[key])
+                ))
+                console.log(inputPlaceholder)
+                ReactDOM.render(
+                  <React.StrictMode>
+                    <EditTask inputPlaceholder={inputPlaceholder} />
+                  </React.StrictMode>,
+                  document.getElementById('dLogin'));
+            })
+            .catch(function (error) {
+                console.log("error")
+            });
+    }
   }
 
   const viewTasks = (e) => {
@@ -100,10 +109,10 @@ function MenuButtons(props) {
     axios(config)
       .then(response => {
         var description = response.data["data"]
-        
+        var pop = response.data["populator"]
         ReactDOM.render(
           <React.StrictMode>
-            <TaskViewer it={description} />
+            <TaskViewer it={description} pop={pop} const mail = {props.mail }/>
           </React.StrictMode>,
           document.getElementById('dLogin'));
       })

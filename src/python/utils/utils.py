@@ -26,12 +26,13 @@ def passwordCheck(password):
 
 def task_assigned(assigned):
     data = {}
-    id = []
+    id = {}
     for doc in config.collection1.find():
         if assigned == doc["task assigned to"]:
             data[doc["task description"]] = str(doc["_id"])
+            id[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"], doc["task assigned to"], doc["task description"]]
             tbd = "Success"
-    return tbd, data
+    return tbd, data, id
 
 
 def task_approver(approver):
@@ -108,9 +109,8 @@ def getstatus(taskID):
 
 def editjson(obj, newMsg, key):
     url = "http://127.0.0.1:5000/getjson"
-
     payload = json.dumps({
-    "objid": "6152f2c8a4108f019de6a328"
+    "objid": obj
     })
     headers = {
     'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ def editjson(obj, newMsg, key):
 
     new[key] = newMsg
     for i in config.collection1.find():
-        if obj == i["_id"]:
+        if ObjectId(obj) == i["_id"]:
             edit = config.collection1.replace_one(old,new)          
     return edit
 
@@ -134,3 +134,11 @@ def getJson(objid):
                 if key not in ["_id"]:
                     data[key]=value
             return data
+
+def deletecollection(obj):
+    print(obj["obj"])
+    for j in config.collection1.find():
+        if ObjectId(obj["obj"]) == j["_id"]:
+            print("Success")
+            config.collection1.delete_one({"_id": ObjectId(obj["obj"])})
+            return("Success")

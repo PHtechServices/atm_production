@@ -4,40 +4,53 @@ import React from 'react';
 import "../css/taskCategorization.css"
 import axios from 'axios';
 
-function TaskCategorization(props) {
+function EditTaskCategorization(props) {
+    const transferrableData = props.transferrableData
+
+    let selectedOT = false
+    let selectedDaily = false
+    let selectedWeekly = false
+    let selectedMonthly = false
+
+    if (transferrableData["task nature"] == "OneTime") {
+        selectedOT = true
+    }
+    else if (transferrableData["task nature"] == "Daily") {
+        let selectedDaily = true
+    }
+    else if (transferrableData["task nature"] == "Weekly") {
+        selectedWeekly = true
+    }
+    else if (transferrableData["task nature"] == "Monthly") {
+        selectedMonthly = true
+    }
 
     const [taskResponsibility, setTaskResponsibility] = useState("");
     const [taskDepartment, setTaskDepartment] = useState("");
     const [taskNature, setTaskNature] = useState("");
-    const [resItems, setResItems] = useState("");
-
+    const [resItems, setResponsib] = useState(props.resItems);
     const staff = props.staffType
-    const transferrableData = props.transferrableData
-
-    const listItems = staff.map((item) =>
-        <option value={item}>{item}</option>);
+    const listItems = props.listItems
 
     const changeTaskResponsibility = (e) => {
-        setTaskResponsibility(e.target.value);
+        transferrableData["task responsibility"] = e.target.value
 
     }
 
     const changeTaskDepartment = (e) => {
-        setTaskDepartment(e.target.value);
+        transferrableData["task department"] = e.target.value
 
     }
 
     const changeTaskNature = (e) => {
-        setTaskNature(e.target.value);
+        transferrableData["task nature"] = e.target.value
 
     }
 
     const submitForm = (e) => {
         e.preventDefault();
-        transferrableData["task responsibility"] = taskResponsibility
-        transferrableData["task department"] = taskDepartment
-        transferrableData["task nature"] = taskNature
         console.log(transferrableData)
+
         const data = JSON.stringify(
             transferrableData
         );
@@ -56,11 +69,28 @@ function TaskCategorization(props) {
                 console.log(staffList)
 
             })
-    }
 
+            const data1 = JSON.stringify(
+                { "obj": props.id }
+            );
+    
+            var config = {
+                method: 'POST',
+                url: 'http://127.0.0.1:5000/delete_collec',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data1
+            };
+            axios(config)
+                .then(response => {
+                    console.log(response.data)
+    
+                })
+    }
     const onSubmitClick = (e) => {
         const data = JSON.stringify({
-            "department": taskDepartment
+            "department": transferrableData["task department"]
         }
         );
 
@@ -78,7 +108,7 @@ function TaskCategorization(props) {
                 var responsibility = response.data["responsibilities"]
                 const x = responsibility.map((item) =>
                     <option value={item}>{item}</option>);
-                setResItems(x)
+                setResponsib(x)
 
             })
 
@@ -95,29 +125,29 @@ function TaskCategorization(props) {
                 <fieldset>
                     <h2 class="fs-title">Task Category</h2>
                     <h3 class="fs-subtitle">Select the appropriate Task Category</h3>
-                    <select id="staff-type" name="staff-type" onChange={changeTaskDepartment}>
+                    <select id="staff-type" name="staff-type" onClick={onSubmitClick} onChange={changeTaskDepartment}>
                         <option value="#">Select Department:</option>
                         {listItems}
                     </select>
-                    <select id="res-type" name="res-type" onClick={onSubmitClick} onChange={changeTaskResponsibility}>
+                    <select id="res-type" name="res-type" onChange={changeTaskResponsibility}>
                         <option value="#">Select Responsibility:</option>
                         {resItems}
                     </select>
                     <select id="res-nature" name="res-nature" onChange={changeTaskNature}>
                         <option value="#">Select Nature of Tasks:</option>
-                        <option value="OneTime">One Time</option>
-                        <option value="Daily">Daily</option>
-                        <option value="Weekly">Weekly</option>
-                        <option value="Monthly">Monthly</option>
+                        <option value="OneTime" selected={selectedOT}>One Time</option>
+                        <option value="Daily" selected={selectedDaily}>Daily</option>
+                        <option value="Weekly" selected={selectedWeekly}>Weekly</option>
+                        <option value="Monthly" selected={selectedMonthly}>Monthly</option>
                     </select><br /><br />
                     <p>Upload Reference Document</p><br />
                     <p></p>
                     <input type="file" id="myFile" name="filename" />
-                    <input type="button" name="next" class="next action-button" value="Submit" onClick={submitForm}/>
+                    <input type="button" name="next" class="next action-button" value="Submit" onClick={submitForm} />
                 </fieldset>
             </form>
         </div>
     );
 }
 
-export default TaskCategorization;
+export default EditTaskCategorization;
