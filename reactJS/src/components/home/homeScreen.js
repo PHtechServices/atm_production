@@ -1,10 +1,10 @@
 import React from 'react';
-import "./homeScreen.scss"
-import './loginScreen.css'
+import "../home/homeScreen.scss"
+import '../login/loginScreen.css'
 import ReactDOM from 'react-dom';
 import "./menuButtons.css"
 import axios from 'axios';
-import TaskViewer from './js/tasksViewer';
+import TaskViewer from '../taskView/tasksViewer';
 import 'reactjs-popup/dist/index.css';
 
 function HomeScreen(props) {

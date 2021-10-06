@@ -1,8 +1,7 @@
 import React from 'react';
-import "../css/updateTasks.css"
-import firstPage from './startTask';
+import "./updateTasks.css"
 import ReactDOM from 'react-dom';
-import FirstPage from './startTask';
+import FirstPage from '../editTasks/startTask';
 
 function UpdateTasks(props) {
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import "../css/updateTasks.css"
+import "../updateTasks/updateTasks.css"
 import { useState } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
-import HomeScreen from '../homeScreen';
-import TaskViewer from './tasksViewer';
+import HomeScreen from '../home/homeScreen';
+import TaskViewer from '../taskView/tasksViewer';
 
 function FirstPage(props) {
     const [startTaskPage, setStartTaskPage] = useState({

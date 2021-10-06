@@ -2,8 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HomeScreen from './homeScreen';
-import "./css/taskCategorization.css"
+import HomeScreen from '../home/homeScreen';
+import "../createTask/taskCategorization.css"
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 

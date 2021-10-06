@@ -1,8 +1,6 @@
 import { useState } from 'react';
-// import TaskCategorization from "./js/taskCategorization"
 import ReactDOM from 'react-dom';
 import React from 'react';
-// import "./css/taskCategorization.css"
 import axios from 'axios';
 import EditTaskCategorization from './editTask2';
 

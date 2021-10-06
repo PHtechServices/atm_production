@@ -1,10 +1,10 @@
 import React from 'react';
-import "../css/taskViewer.scss"
-import CalendarAPI from './calendar';
-import UpdateTasks from './updateTasks';
+import "./taskViewer.scss"
+import CalendarAPI from '../googleAuth/calendar';
+import UpdateTasks from '../updateTasks/updateTasks';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import EditTask from './editTask';
+import EditTask from '../editTasks/editTask';
 function TaskViewer(props) {
 
     const openTaskEditor = (e) => {

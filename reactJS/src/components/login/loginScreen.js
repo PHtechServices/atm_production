@@ -3,8 +3,8 @@ import { useState } from 'react';
 import './loginScreen.css'
 import ReactDOM from 'react-dom';
 import React from 'react';
-import HomeScreen from './homeScreen';
-import MenuButtons from './menuButtons';
+import HomeScreen from '../home/homeScreen';
+import MenuButtons from '../home/menuButtons';
 
 function Login() {
   const [userName, setUserName] = useState("");

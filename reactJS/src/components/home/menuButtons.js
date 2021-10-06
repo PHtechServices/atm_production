@@ -1,18 +1,18 @@
-import './loginScreen.css'
+import '../login/loginScreen.css'
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import CreateTask from './createTask';
-import HomeScreen from './homeScreen';
-import CreateUser from './createUser';
+import CreateTask from '../createTask/createTask';
+import HomeScreen from '../home/homeScreen';
+import CreateUser from '../createUser/createUser';
 import "./menuButtons.css"
 import axios from 'axios';
-import TaskViewer from './js/tasksViewer';
-import Calendar from './js/calendar';
-import CalendarAPI from './js/calendar';
+import TaskViewer from '../taskView/tasksViewer';
+import Calendar from '../googleAuth/calendar';
+import CalendarAPI from '../googleAuth/calendar';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import UpdateTasks from './js/updateTasks';
-import EditTask from './js/editTask';
+import UpdateTasks from '../updateTasks/updateTasks';
+import EditTask from '../editTasks/editTask';
 
 
 function MenuButtons(props) {
