@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 
 #contact input[type="text"],
+#contact input[type="password"],
 #contact select,
 #contact option,
 #contact button[type="submit"] {
@@ -29,6 +30,7 @@ fieldset {
 }
 
 #contact input[type="text"],
+#contact input[type="password"],
 #contact textarea {
   width: 100%;
   border: 1px solid #ccc;

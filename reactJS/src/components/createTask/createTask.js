@@ -65,7 +65,7 @@ function CreateTask(props) {
                 var staffList = response.data["staffList"]
                 ReactDOM.render(
                     <React.StrictMode>
-                        <TaskCategorization staffType={staffList} transferrableData={transferrableData} />
+                        <TaskCategorization name={props.name} staffType={staffList} transferrableData={transferrableData} />
                     </React.StrictMode>,
                     document.getElementById('dLogin')
                 );

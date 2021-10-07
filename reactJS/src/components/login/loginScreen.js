@@ -91,7 +91,7 @@ function Login() {
           <input placeholder="User Name" type="text" tabindex="1" onChange={onUserChange} required autofocus />
         </fieldset>
         <fieldset>
-          <input placeholder="Password" type="text" tabindex="2" onChange={onPassChange} required />
+          <input placeholder="Password" type="password" tabindex="2" onChange={onPassChange} required />
         </fieldset>
         <fieldset>
         <button type="submit">Submit</button>

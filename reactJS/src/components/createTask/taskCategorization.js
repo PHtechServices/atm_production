@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import "./taskCategorization.css"
 import axios from 'axios';
+import HomeScreen from '../home/homeScreen';
 
 function TaskCategorization(props) {
 
@@ -56,6 +57,11 @@ function TaskCategorization(props) {
                 console.log(staffList)
 
             })
+            ReactDOM.render(
+                <React.StrictMode>
+                  <HomeScreen name={props.name} />
+                </React.StrictMode>,
+                document.getElementById('dLogin'));
     }
 
     const onSubmitClick = (e) => {

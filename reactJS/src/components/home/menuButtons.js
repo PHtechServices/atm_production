@@ -7,11 +7,7 @@ import CreateUser from '../createUser/createUser';
 import "./menuButtons.css"
 import axios from 'axios';
 import TaskViewer from '../taskView/tasksViewer';
-import Calendar from '../googleAuth/calendar';
-import CalendarAPI from '../googleAuth/calendar';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import UpdateTasks from '../updateTasks/updateTasks';
 import EditTask from '../editTasks/editTask';
 
 
@@ -21,7 +17,7 @@ function MenuButtons(props) {
   const createNewTask = (e) => {
     ReactDOM.render(
       <React.StrictMode>
-        <CreateTask assignee={props.mail} />
+        <CreateTask assignee={props.mail} name={props.name} />
       </React.StrictMode>,
       document.getElementById('dLogin'));
   }
@@ -40,7 +36,7 @@ function MenuButtons(props) {
   const createNewUser = (e) => {
     ReactDOM.render(
       <React.StrictMode>
-        <CreateUser />
+        <CreateUser name={props.name}/>
       </React.StrictMode>,
       document.getElementById('dLogin'));
   }
@@ -52,43 +48,6 @@ function MenuButtons(props) {
       </React.StrictMode>,
       document.getElementById('dLogin')
     );
-  }
-
-  const viewCalendar = (e) => {
-    var inputPlaceholder = []
-
-    {
-        const id = "615bedcbe414a11c3b3a7c66"
-        const data = JSON.stringify({
-            "objid": id
-        });
-
-        var config = {
-            method: 'POST',
-            url: 'http://127.0.0.1:5000/getjson',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-
-        axios(config)
-            .then(response => {
-                const test = response.data["json"]
-                const listItems = Object.keys(test).map((key, index) => (
-                    inputPlaceholder.push(test[key])
-                ))
-                console.log(inputPlaceholder)
-                ReactDOM.render(
-                  <React.StrictMode>
-                    <EditTask inputPlaceholder={inputPlaceholder} />
-                  </React.StrictMode>,
-                  document.getElementById('dLogin'));
-            })
-            .catch(function (error) {
-                console.log("error")
-            });
-    }
   }
 
   const viewTasks = (e) => {
@@ -112,7 +71,7 @@ function MenuButtons(props) {
         var pop = response.data["populator"]
         ReactDOM.render(
           <React.StrictMode>
-            <TaskViewer it={description} pop={pop} const mail = {props.mail }/>
+            <TaskViewer it={description} pop={pop} const mail = {props.mail } cTask={props.cTask}/>
           </React.StrictMode>,
           document.getElementById('dLogin'));
       })
@@ -132,10 +91,7 @@ function MenuButtons(props) {
           <a class="nav-link" href="#" onClick={createNewUser}><h6>Create User</h6></a>
         </li>}
         <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={viewTasks}><h6>View Tasks</h6></a>
-        </li>
-        <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={viewCalendar}><h6>Admin</h6></a>
+          <a class="nav-link" href="#" onClick={viewTasks}><h6>My Tasks</h6></a>
         </li>
       </ul>
     </nav>

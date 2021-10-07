@@ -81,7 +81,7 @@ function TaskViewer(props) {
     const listItems = Object.keys(description).map((key, index) => (
         <tr>
             <td class="tick"><label id={description[key]}>{key}</label></td>
-            <td><button id={description[key]} onClick={openTaskEditor} class="offset">Edit</button></td>
+            {props.cTask && <td><button id={description[key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
             <td><button id={description[key]} onClick={openTaskUpdater} class="offset">Update</button></td>
         </tr>
     ))
