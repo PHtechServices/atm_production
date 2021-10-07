@@ -38,6 +38,7 @@ function TaskCategorization(props) {
         transferrableData["task responsibility"] = taskResponsibility
         transferrableData["task department"] = taskDepartment
         transferrableData["task nature"] = taskNature
+        transferrableData["task updates"] = ""
         console.log(transferrableData)
         const data = JSON.stringify(
             transferrableData

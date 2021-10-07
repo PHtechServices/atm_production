@@ -28,7 +28,7 @@ def task_assigned(assigned):
     data = {}
     id = {}
     for doc in config.collection1.find():
-        if assigned == doc["task assigned to"]:
+        if assigned == doc["task assigned to"] and ("Start Task" == doc["task status"] or "Update Task Status" == doc["task status"]):
             data[doc["task description"]] = str(doc["_id"])
             id[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"], doc["task assigned to"], doc["task description"]]
             tbd = "Success"
@@ -142,3 +142,10 @@ def deletecollection(obj):
             print("Success")
             config.collection1.delete_one({"_id": ObjectId(obj["obj"])})
             return("Success")
+
+def task_assigned1(obji):
+    data = []
+    for x in config.collection1.find():
+        if ObjectId(obji) == x["_id"]:
+            data.append(x)
+    return  data

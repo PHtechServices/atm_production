@@ -129,4 +129,12 @@ def delete_collection():
     temp = deletecollection(req_data)
     return jsonify({"message":"Collection Deleted"})
 
+#task_Assign using Object id
+@app.route("/taskassign1", methods=['POST'])
+def task_assign1():
+    objid = request.get_json("obji")
+    jsoni = getJson(ObjectId(objid["obji"]))
+    print(jsoni)
+    return jsonify({"message":"json retrived","json":jsoni})
+
 app.run(debug=True, port=5000, host="0.0.0.0")
