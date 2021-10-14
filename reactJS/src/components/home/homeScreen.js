@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "../home/homeScreen.scss"
-import '../login/loginScreen.css'
 import ReactDOM from 'react-dom';
 import "./menuButtons.css"
 import axios from 'axios';
@@ -100,9 +99,6 @@ function HomeScreen(props) {
             <cite class="intro">{quotes[num]}</cite><br /><br />
             <p>Let's see what's in your To-Do List Today</p>
             <a href="/" class="button" onClick={viewTasks}>View Tasks</a>
-          </div>
-          <div class="block">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/48935/hello.jpg" alt="An illustration of me in profile" />
           </div>
         </div>
       </main>

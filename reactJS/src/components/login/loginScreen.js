@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import HomeScreen from '../home/homeScreen';
 import MenuButtons from '../home/menuButtons';
+import Notices from '../rightSideBar/notices';
+import ChatBar from '../sideChatBar/chatBar';
+import CalendarAPI from '../googleAuth/calendar';
 
 function Login() {
   const [userName, setUserName] = useState("");
@@ -77,16 +80,27 @@ function Login() {
               <HomeScreen name={dd} mail={mail} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
+          
+            ReactDOM.render(
+              <React.StrictMode>
+                <Notices />
+              </React.StrictMode>,
+              document.getElementById('notices'));
+
+              ReactDOM.render(
+                <React.StrictMode>
+                  <ChatBar />
+                </React.StrictMode>,
+                document.getElementById('sideb'));
         }
       })
 
   }
 
   return (
-    <div id="loginScreen" style={{maxWidth:"50%",marginLeft:"30%"}}>
+    <div id="loginScreen" style={{width:"80%",marginLeft:"-30%", marginTop:"20%"}}>
       <form id="contact" onSubmit={validateUser}>
-        <h3>admin@srishtiworldschools.in</h3>
-        <h3>admin@admin</h3>
+        <h3>Log In</h3>
         <fieldset>
           <input placeholder="User Name" type="text" tabindex="1" onChange={onUserChange} required autofocus />
         </fieldset>

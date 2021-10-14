@@ -1,10 +1,12 @@
 import React from 'react';
-import "../updateTasks/updateTasks.css"
+import "./startTask.css"
 import { useState } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import HomeScreen from '../home/homeScreen';
 import TaskViewer from '../taskView/tasksViewer';
+import EditTask from './editTask';
+import UpdateTasks from '../updateTasks/updateTasks';
 
 function FirstPage(props) {
     const [startTaskPage, setStartTaskPage] = useState({
@@ -13,18 +15,170 @@ function FirstPage(props) {
         "componentsButtons": props.componentsInput["componentsButtons"],
         "componentsUpload": props.componentsInput["componentsUpload"],
         "message": props.componentsInput["message"],
-        "buttonValue": props.componentsInput["buttonValue"]
+        "buttonValue": props.componentsInput["buttonValue"],
+        "status": props.componentsInput["view"]
     });
     const [status, setStatus] = useState("")
+    const [comments, setComments] = useState("")
     const pop = props.pop
     const id = props.id
-    console.log(props.mail)
-    console.log(pop[id][0])
+    const ff = props.ff
+
+    const openTaskEditor = (e) => {
+        var inputPlaceholder = []
+
+    {
+        const id = e.target.id
+        console.log(id)
+        const data = JSON.stringify({
+            "objid": id
+        });
+
+        var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/getjson',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(response => {
+                const test = response.data["json"]
+                const listItems = Object.keys(test).map((key, index) => (
+                    inputPlaceholder.push(test[key])
+                ))
+                console.log(inputPlaceholder)
+                ReactDOM.render(
+                  <React.StrictMode>
+                    <EditTask inputPlaceholder={inputPlaceholder} id={id}/>
+                  </React.StrictMode>,
+                  document.getElementById('dLogin'));
+            })
+            .catch(function (error) {
+                console.log("error")
+            });
+    }
+    }
+
+    const openTaskUpdater = (e) => {
+
+        const mail = props.mail
+        console.log(mail)
+        const id = e.target.id
+        const pop = props.pop
+        console.log(pop)
+        const data = JSON.stringify({
+            "taskID": id
+        });
+
+        var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/taskstatus',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(response => {
+                let x = "white"
+                let y = "white"
+                let ff = false
+                var componentsInput = response.data["data"]
+                if (componentsInput["title"] == "Start Task") {
+                    x = "green"
+                    y = "white"
+                }
+                else if (componentsInput["title"] == "Update Task Status") {
+                   x = "grey"
+                   y = "green"
+                   ff = true
+                }
+                console.log(y)
+                console.log(x)
+                ReactDOM.render(
+                    <React.StrictMode>
+                        <UpdateTasks ff={ff} colorTaskCreated={x} colorTaskUpdated={y} componentsInput={componentsInput} mail={mail} pop={pop} id={id} />
+                    </React.StrictMode>,
+                    document.getElementById('dLogin'));
+            })
+            .catch(function (error) {
+            });
+    }
+
+    const getComments = (e) => {
+        setComments(e.target.value)
+    }
+
+    const markAsComplete = (e) => {
+        e.preventDefault();
+        const data = JSON.stringify({
+            "objid": props.id,
+            "message": "Task Completed Successfully",
+            "key": "task status"
+        }
+        );
+
+        var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/edit',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        axios(config)
+            .then(response => {
+                setStartTaskPage({
+                    "title": props.componentsInput["title"],
+                    "componentsInput": props.componentsInput["componentsInput"],
+                    "componentsButtons": props.componentsInput["componentsButtons"],
+                    "componentsUpload": props.componentsInput["componentsUpload"],
+                    "message": props.componentsInput["message"],
+                    "buttonValue": props.componentsInput["buttonValue"],
+                    "status": props.componentsInput["view"]
+                })
+                const mail = props.mail
+                const data = JSON.stringify({
+                    "assigned": mail
+                });
+
+                var config = {
+                    method: 'POST',
+                    url: 'http://127.0.0.1:5000/taskassign',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                };
+
+                axios(config)
+                    .then(response => {
+                        var description = response.data["data"]
+                        var pop = response.data["populator"]
+                        let listItems
+                        if (props.msg == "tasks are not assigned"){
+                            listItems = <div>No Tasks to Display</div>
+                        }
+                        else {
+                            listItems = Object.keys(description).map((key, index) => (
+                                <tr>
+                                    <td class="tick"><label id={description[key]}>{key}</label></td>
+                                    {props.cTask && <td><button id={description[key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+                                    <td><button id={description[key]} onClick={openTaskUpdater} class="offset">Update</button></td>
+                                </tr>
+                            ))
+                        }
+                    })
+            })
+    }
 
     const changeScreen = (e) => {
         e.preventDefault();
         if (startTaskPage["title"] === "Start Task") {
-            setStatus("Update Task")
             const data = JSON.stringify({
                 "objid": props.id,
                 "message": "Update Task Status",
@@ -48,7 +202,8 @@ function FirstPage(props) {
                         "componentsButtons": props.componentsInput["componentsButtons"],
                         "componentsUpload": props.componentsInput["componentsUpload"],
                         "message": props.componentsInput["message"],
-                        "buttonValue": props.componentsInput["buttonValue"]
+                        "buttonValue": props.componentsInput["buttonValue"],
+                        "status": props.componentsInput["view"]
                     })
                     const mail = props.mail
                     const data = JSON.stringify({
@@ -79,15 +234,14 @@ function FirstPage(props) {
         }
         else if (startTaskPage["title"] === "Update Task Status") {
             const data = JSON.stringify({
-                "objid": "6152f2c8a4108f019de6a328",
-                "message": "Task Completed Successfully",
-                "key": "task status"
+                "data": { "comments": comments },
+                "objid": id
             }
             );
 
             var config = {
                 method: 'POST',
-                url: 'http://127.0.0.1:5000/edit',
+                url: 'http://127.0.0.1:5000/updateComments',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -101,7 +255,8 @@ function FirstPage(props) {
                         "componentsButtons": props.componentsInput["componentsButtons"],
                         "componentsUpload": props.componentsInput["componentsUpload"],
                         "message": props.componentsInput["message"],
-                        "buttonValue": props.componentsInput["buttonValue"]
+                        "buttonValue": props.componentsInput["buttonValue"],
+                        "status": props.componentsInput["status"]
                     })
                     const mail = props.mail
                     const data = JSON.stringify({
@@ -138,10 +293,10 @@ function FirstPage(props) {
             );
         }
     }
-    console.log(props)
+    console.log(startTaskPage["status"])
     const listUpdateTaskPageInputs = startTaskPage["componentsInput"].map((item, index) =>
         <label>{item}
-            <input type="text" name="email" placeholder={pop[id][index]} readOnly /></label>
+            <input id="inputValues" type="text" name="email" placeholder={pop[id][index]} readOnly={startTaskPage["status"]} style={{ width: "340px" }} onChange={getComments} /></label>
 
     );
     const listUpdateTaskPageUpload = startTaskPage["componentsUpload"].map((item) =>
@@ -153,6 +308,7 @@ function FirstPage(props) {
     const title = <h2 class="fs-title">{startTaskPage["title"]}</h2>
 
     const btn = <input type="submit" name="next" class="action-button" value={startTaskPage["buttonValue"]} onClick={changeScreen} />
+    const btn2 = <input type="submit" name="next" class="action-button" value="Mark as Complete" style={{ width: "200px" }} onClick={markAsComplete} />
 
     return (
         <form id="msform">
@@ -162,6 +318,7 @@ function FirstPage(props) {
                 {listUpdateTaskPageUpload}
                 {listUpdateTaskPageButtons}
                 {btn}
+                {ff && btn2}
             </fieldset>
         </form>
     );

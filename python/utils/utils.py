@@ -27,12 +27,18 @@ def passwordCheck(password):
 def task_assigned(assigned):
     data = {}
     id = {}
-    for doc in config.collection1.find():
-        if assigned == doc["task assigned to"] and ("Start Task" == doc["task status"] or "Update Task Status" == doc["task status"]):
-            data[doc["task description"]] = str(doc["_id"])
-            id[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"], doc["task assigned to"], doc["task description"]]
-            tbd = "Success"
-    return tbd, data, id
+    try:
+        for doc in config.collection1.find():
+            if assigned == doc["task assigned to"] and ("Start Task" == doc["task status"] or "Update Task Status" == doc["task status"]):
+                data[doc["task description"]] = str(doc["_id"])
+                id[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"], doc["task assigned to"], doc["task description"]]
+                tbd = "Success"
+        return tbd, data, id
+    except:
+        tbd="Failure"
+        id = None
+        data[doc["task description"]] = "No Tasks To Display"
+        return tbd, data, id
 
 
 def task_approver(approver):
@@ -104,6 +110,7 @@ def getstatus(taskID):
             data["componentsUpload"] = j["componentsUpload"]
             data["message"] = j["message"]
             data["buttonValue"] = j["buttonValue"]
+            data["view"] = j["view"]
             break
     return status, data
 

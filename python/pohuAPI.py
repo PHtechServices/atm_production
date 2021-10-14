@@ -6,6 +6,8 @@ from flask_cors import CORS
 import flask
 from utils.utils import *
 from bson import ObjectId
+import copy
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -45,16 +47,17 @@ def insert_document():
     config.userDetailsTemplate["addresses"][0]["streetAddress"] = req_data["address"]
     config.userDetailsTemplate["phones"][0]["value"] = req_data["phone"]
     config.userDetailsTemplate["organizations"][0]["title"] = req_data["title"]
+    config.userDetailsTemplate["organizations"][0]["name"] = req_data["college"]
 
-    url = "https://admin.googleapis.com/admin/directory/v1/users"
+    # url = "https://admin.googleapis.com/admin/directory/v1/users"
 
-    payload = json.dumps(config.userDetailsTemplate)
-    headers = {
-        'Authorization': 'Bearer ya29.a0ARrdaM8CMoECf7xS4_yceRZ41F9iWpcN5FzhRFpT2lu_Vi-BnL4bRUX4DbJuczaLoSe21WzHD3VFd2mCX5q8j__hzbL9KU2zMi_-AJGKXQoGrruyQumj2I_BmczBUvmguaauffIdDLs7Mg-pmFIA5_eH6u3a',
-        'Content-Type': 'application/json'
-    }
+    # payload = json.dumps(config.userDetailsTemplate)
+    # headers = {
+    #     'Authorization': 'Bearer ya29.a0ARrdaM94h_V5W1h5mAZwDqMZJ1LPdCuETHNpggWwsgQrA-WqW9XChRy9gbM6q0XhXKBmJtQRil0BD-ATRl0ASW8dRCBRTu5rwJEUEmJEdLf7IBR8Ka5ZxgF40lQChe9rnIIVRr0hfVpSpN64tYhdkW2jsEszdg',
+    #     'Content-Type': 'application/json'
+    # }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    # response = requests.request("POST", url, headers=headers, data=payload)
 
     config.collection.insert_one(config.userDetailsTemplate).inserted_id
     return jsonify({"message": "Congratualtions user inserted Sucessfully..."})
@@ -75,7 +78,7 @@ def task_assign():
     if assign == "Success":
         return jsonify({"message": "tasks are assigned", "data": data, "populator": id})
     else:
-        return jsonify({"message": "tasks are not assigned"})
+        return jsonify({"message": "tasks are not assigned", "data": data})
 
 
 @app.route("/taskapprove", methods=['POST'])
@@ -136,5 +139,25 @@ def task_assign1():
     jsoni = getJson(ObjectId(objid["obji"]))
     print(jsoni)
     return jsonify({"message":"json retrived","json":jsoni})
+
+@app.route("/updateComments", methods=['POST'])
+def checkmailfortaskupdate():
+    x = request.get_json()
+    js = x["data"]
+    objid = x["objid"]
+    print(objid)
+    temp = {}
+    ct = str(datetime.datetime.now().date())
+    js["timeStamp"]=ct
+    for a in config.collection1.find():
+        if ObjectId(objid) == a["_id"]:
+            for key, value in a.items():
+                if key not in ["_id"]:
+                    temp[key]=value
+            old = copy.deepcopy(temp)
+            new = copy.deepcopy(temp)
+            new["task updates"].append(js)
+            edit = config.collection1.replace_one(old,new)
+            return ("Success")
 
 app.run(debug=True, port=5000, host="0.0.0.0")

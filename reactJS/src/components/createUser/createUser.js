@@ -15,6 +15,7 @@ function CreateUser() {
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [title, setTitle] = useState("");
+    const [college, setCollege] = useState("");
 
     const get_email = (e) => {
         setEmail(e.target.value);
@@ -43,6 +44,10 @@ function CreateUser() {
         setTitle(e.target.value);
     }
 
+    const get_college = (e) => {
+        setCollege(e.target.value);
+    }
+
     const createNewUser = (e) => {
         e.preventDefault();
         var data = JSON.stringify({
@@ -53,7 +58,8 @@ function CreateUser() {
                 "password": password,
                 "address": address,
                 "phone": phone,
-                "title": title
+                "title": title,
+                "college": college
             }
         });
 
@@ -78,7 +84,7 @@ function CreateUser() {
             })
     }
     return (
-        <div id="App">
+        <div id="App" class="App">
             <form id="msform" onSubmit={createNewUser}>
                 <fieldset>
                     <h2 class="fs-title">Create a New User</h2>
@@ -98,6 +104,11 @@ function CreateUser() {
                         <option value="teacherCoordinator">Teacher Coordinator</option>
                         <option value="classTeacher">Class Teacher</option>
                         <option value="teacher">Teacher</option>
+                    </select>
+                    <select id="college-categorization" name="college-categorization" onChange={get_college} required>
+                        <option value="#">Select College:</option>
+                        <option value="sws">Srishti World Schools</option>
+                        <option value="cps">Chaitanya Public School</option>
                     </select>
                     <input type="submit" name="next" class="action-button" value="Submit" />
                 </fieldset>

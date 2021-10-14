@@ -278,3 +278,19 @@
   }
   
   }
+
+  #inputValues {
+    width: 200px;
+  }
+
+  .my-color {
+    background-color: green;
+  }
+
+  .my-color-1 {
+    background-color: grey;
+  }
+
+  .App2 {
+    margin-left: -75%;
+  }

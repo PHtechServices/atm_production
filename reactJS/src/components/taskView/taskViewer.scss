@@ -1,6 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 h3 { color: rgb(0, 0, 0) }
+
+.App1 {
+  margin-left: -65%;
+  margin-top: -8%;
+}
 
 .featureList {
     font-size: 12px;
@@ -17,9 +23,9 @@ h2 {
   padding: 20px 0;
 }
 
-.table-bordered tr td {
-  border: 2px solid black;
-}
+// .table-bordered tr td {
+//   border: 2px solid black;
+// }
 
 table caption {
 	padding: .5em 0;
@@ -30,6 +36,7 @@ table caption {
     display: none;
   }
 }
+
 
 .p {
   text-align: center;

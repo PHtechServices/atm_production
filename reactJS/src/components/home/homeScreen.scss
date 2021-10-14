@@ -1,5 +1,4 @@
 body {
-	background-color: #FEDF9E;
 	color: #000000;
 	font-family: 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
@@ -15,19 +14,19 @@ body {
 	text-decoration: underline;
 }
 
-img { height: auto; max-width: 80%; margin-top: 0; }
 
-.button { background-color: #000000; border: 2px solid #000000; color: #ffffff; display: inline-block; font-size: 18px; font-weight: 600; margin: 0; padding: 12px 32px 14px 32px; text-decoration: none; text-transform: uppercase; }
+.button { background-color: #000000; border: 2px solid #000000; color: #ffffff; display: inline-block; font-size: 18px; font-weight: 600; padding: 12px 32px 14px 32px; text-decoration: none; text-transform: uppercase; }
 .button:hover { background-color: #ffffff; color: #000000; }
 
-.home-page { display: grid; font-size: 24px; grid-template-columns: 50% 50%; line-height: 1.2;}
-.home-page h1 { font-size: 1em; margin: 4em 0 0 0; }
+.home-page { font-size: 24px; line-height: 1.2; margin-left: -70%; max-width: 120%;}
+.home-page h1 { font-size: 1em;margin-top: 10%; }
 .home-page .button { margin: 1em 0; }
 
 footer { background-color: #000000; color: rgba(255, 255, 255, 0.6); padding: 5%; }
 
 .intro {
-	font-size: 16px;
+	font-size: 10px;
+	width: 1%;
 }
 
 @media screen and (max-width: 45em) {

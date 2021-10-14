@@ -54,7 +54,7 @@ function CreateTask(props) {
             "task description": taskDescription,
             "task priority": taskPriority,
             "task deadline": taskDeadline,
-            "task assigned to": assigned,
+            "task assigned to": assigned+"@srishtiworldschools.in",
             "task assigned by": props.assignee,
             "task type": staffType,
             "task status": "Start Task"
@@ -76,7 +76,7 @@ function CreateTask(props) {
     }
 
     return (
-        <div className="App" onSubmit={onNextClick}>
+        <div className="App" class="App" onSubmit={onNextClick}>
             <form id="msform">
                 <ul id="progressbar">
                     <li class="active">General Information</li>
@@ -98,7 +98,7 @@ function CreateTask(props) {
                         <option value="teachingStaff">Teaching Staff</option>
                         <option value="nonTeachingStaff">Non-Teaching Staff</option>
                     </select>
-                    <input type="email" id="birthday" placeholder="Assigned To" onChange={changeAssignedTo} required />
+                    <input type="text" id="birthday" placeholder="Assigned To" onChange={changeAssignedTo} required />
                     <input type="submit" name="next" class="action-button" value="Next" />
                 </fieldset>
             </form>
