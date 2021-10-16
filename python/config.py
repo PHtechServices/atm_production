@@ -7,6 +7,7 @@ client = MongoClient("mongodb+srv://himanshu:himanshu@cluster0.ebjdo.mongodb.net
 db = client.AtmPohu
 db2 = client.students
 db3 = client.attendaceqr
+collectionQR = db3.qr
 collection = db.Users
 collection1 = db.Task
 collectionStaff = db.Staff

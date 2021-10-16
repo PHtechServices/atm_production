@@ -277,6 +277,6 @@ def student_list(classn):
     return dict2
 
 def qrsearch(test):
-    for i in config.db3.collection.find():
+    for i in config.collectionQR.find():
         if test == i["QR"]["qrid"]:
             return i["QR"]
