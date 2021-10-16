@@ -12,6 +12,10 @@ import CalendarAPI from '../googleAuth/calendar';
 function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  // const [classTeacher, setCT] = useState("")
+  // const [rmEmail, setRMEmail] = useState("")
+  // const [rmName, setRMName] = useState("")
+  // const [subjects, setSubjects] = useState("")
   const onUserChange = (e) => {
     setUserName(e.target.value);
   }
@@ -68,37 +72,72 @@ function Login() {
         }
 
         else {
-          ReactDOM.render(
-            <React.StrictMode>
-              <MenuButtons role={dd} mail={mail} cTask={cTask} cUser={cUser} name={dd}/>
-            </React.StrictMode>,
-            document.getElementById('root')
-          );
+          var config = {
+            method: 'POST',
+            url: 'http://127.0.0.1:5000/getProfileInfo',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data: {
+              "mail": mail
+            }
+          };
 
-          ReactDOM.render(
-            <React.StrictMode>
-              <HomeScreen name={dd} mail={mail} />
-            </React.StrictMode>,
-            document.getElementById('dLogin'));
-          
-            ReactDOM.render(
-              <React.StrictMode>
-                <Notices />
-              </React.StrictMode>,
-              document.getElementById('notices'));
+          axios(config)
+            .then(response => {
+              var profileInformation = response.data
+              let classTeacher
+              let rmEmail
+              let rmName
+              let subjects
+              Object.keys(profileInformation).map((key, index) => {
+
+                if (key === "classTeacher") {
+                  classTeacher = profileInformation[key]
+                }
+                if (key === "reportingManagerEmail") {
+                  rmEmail = profileInformation[key]
+                }
+                if (key === "reportingManagerName") {
+                  rmName = profileInformation[key]
+                }
+                if (key === "subjects") {
+                  subjects = profileInformation[key]
+                }
+                ReactDOM.render(
+                  <React.StrictMode>
+                    <MenuButtons role={dd} mail={mail} cTask={cTask} cUser={cUser} name={dd} classTeacher={classTeacher} rmEmail={rmEmail} rmName={rmName} subjects={subjects} />
+                  </React.StrictMode>,
+                  document.getElementById('root')
+                );
+              })
+
+              ReactDOM.render(
+                <React.StrictMode>
+                  <HomeScreen name={dd} mail={mail} />
+                </React.StrictMode>,
+                document.getElementById('dLogin'));
+
+              ReactDOM.render(
+                <React.StrictMode>
+                  <Notices />
+                </React.StrictMode>,
+                document.getElementById('notices'));
 
               ReactDOM.render(
                 <React.StrictMode>
                   <ChatBar />
                 </React.StrictMode>,
                 document.getElementById('sideb'));
+            }
+            )
         }
       })
 
   }
 
   return (
-    <div id="loginScreen" style={{width:"80%",marginLeft:"-30%", marginTop:"20%"}}>
+    <div id="loginScreen" style={{ width: "80%", marginLeft: "-30%", marginTop: "20%" }}>
       <form id="contact" onSubmit={validateUser}>
         <h3>Log In</h3>
         <fieldset>
@@ -108,7 +147,7 @@ function Login() {
           <input placeholder="Password" type="password" tabindex="2" onChange={onPassChange} required />
         </fieldset>
         <fieldset>
-        <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
         </fieldset>
       </form>
     </div>

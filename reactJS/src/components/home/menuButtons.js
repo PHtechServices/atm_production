@@ -9,15 +9,29 @@ import axios from 'axios';
 import TaskViewer from '../taskView/tasksViewer';
 import 'reactjs-popup/dist/index.css';
 import EditTask from '../editTasks/editTask';
+import AssignTeacher from '../assignTasks/assignTeacher';
+import MyProfile from '../profile/profile';
+import Meeting from '../meeting/meetings';
 
 
 function MenuButtons(props) {
   const cTask = props.cTask
   const cUser = props.cUser
+  const subjects = props.subjects
+  const classTeacher = props.classTeacher
+  console.log(classTeacher)
+  const mail=props.mail
   const createNewTask = (e) => {
     ReactDOM.render(
       <React.StrictMode>
         <CreateTask assignee={props.mail} name={props.name} />
+      </React.StrictMode>,
+      document.getElementById('dLogin'));
+  }
+  const scheduleMeetings = (e) => {
+    ReactDOM.render(
+      <React.StrictMode>
+        <Meeting />
       </React.StrictMode>,
       document.getElementById('dLogin'));
   }
@@ -33,10 +47,20 @@ function MenuButtons(props) {
 
   }
 
+  const viewProfile = (e) => {
+        ReactDOM.render(
+          <React.StrictMode>
+            <MyProfile dd={props.name} mail={props.mail} classTeacher={props.classTeacher} rmEmail={props.rmEmail} 
+            rmName={props.rmName} subjects={props.subjects}/>
+          </React.StrictMode>,
+          document.getElementById('dLogin'));
+      }
+
+
   const createNewUser = (e) => {
     ReactDOM.render(
       <React.StrictMode>
-        <CreateUser name={props.name}/>
+        <CreateUser name={props.name} />
       </React.StrictMode>,
       document.getElementById('dLogin'));
   }
@@ -49,6 +73,27 @@ function MenuButtons(props) {
       document.getElementById('dLogin')
     );
   }
+
+  const assignTask = (e) => {
+    var config = {
+      method: 'GET',
+      url: 'http://127.0.0.1:5000/classInfo',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    axios(config)
+      .then(response => {
+        var classInfo = response.data["xx"]
+        var subjectInfo = response.data["yy"]
+        ReactDOM.render(
+          <React.StrictMode>
+            <AssignTeacher classInfo={classInfo} subjectInfo={subjectInfo} />
+          </React.StrictMode>,
+          document.getElementById('dLogin'));
+        })
+      }
 
   const viewTasks = (e) => {
     const mail = props.mail
@@ -69,21 +114,23 @@ function MenuButtons(props) {
       .then(response => {
         var description = response.data["data"]
         var pop = response.data["populator"]
-        if (response.data["message"] === "tasks are assigned"){
-        ReactDOM.render(
-          <React.StrictMode>
-            <TaskViewer msg={response.data["message"]} it={description} pop={pop} const mail = {props.mail } cTask={props.cTask}/>
-          </React.StrictMode>,
-          document.getElementById('dLogin'));}
+        if (response.data["message"] === "tasks are assigned") {
+          ReactDOM.render(
+            <React.StrictMode>
+              <TaskViewer msg={response.data["message"]} it={description} pop={pop} const mail={props.mail} cTask={props.cTask} />
+            </React.StrictMode>,
+            document.getElementById('dLogin'));
+        }
         else {
           ReactDOM.render(
             <React.StrictMode>
               <div>No Tasks to Display</div>
             </React.StrictMode>,
-            document.getElementById('dLogin'));}
+            document.getElementById('dLogin'));
+        }
       })
 
-      }
+  }
 
   return (
     <nav class="navbar navbar-expand-sm navbar-expand-xl bg-dark navbar-dark">
@@ -99,11 +146,14 @@ function MenuButtons(props) {
           <a class="nav-link" href="#" onClick={viewTasks}><h6>My Tasks</h6></a>
         </li>
         <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={viewTasks}><h6>Schedule Meeting</h6></a>
+          <a class="nav-link" href="#" onClick={scheduleMeetings}><h6>Schedule Meeting</h6></a>
         </li>
         <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={viewTasks}><h6>Dashboards</h6></a>
+          <a class="nav-link" href="#" onClick={viewProfile}><h6>My Profile</h6></a>
         </li>
+        {cTask && <li class="nav-item mr-xl-3 mr-sm-3">
+          <a class="nav-link" href="#" onClick={assignTask}><h6>Assign</h6></a>
+        </li>}
       </ul>
     </nav>
   );

@@ -11,6 +11,8 @@ collectionStaff = db.Staff
 collectionResponsibilities = db.Responsibilities
 collection2 = db.Roles
 collectionStatus = db.TaskStatus
+collectionClassInfo = db.ClassInfo
+collectionTeacherAssignments = db.teacherAssignments
 
 eventTemplate = {
         'summary': 'Google I/O 2015',

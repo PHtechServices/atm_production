@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./startTask.css"
 import { useState } from 'react';
 import axios from 'axios';
@@ -20,9 +20,40 @@ function FirstPage(props) {
     });
     const [status, setStatus] = useState("")
     const [comments, setComments] = useState("")
+    const [com, setCom] = useState()
+    const [dd, setDd] = useState(false)
     const pop = props.pop
     const id = props.id
     const ff = props.ff
+
+    useEffect(() => {
+        const id = props.id
+                    const data = JSON.stringify({
+                        "id": id
+                    });
+
+                    var config = {
+                        method: 'POST',
+                        url: 'http://127.0.0.1:5000/getComments',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+
+                    axios(config)
+                        .then(response => {
+                            var comments1 = response.data["comments"]
+                            if (comments1.length != 0){setDd(true)
+                                setCom(comments1.map((item) =>
+                                Object.keys(item).map((key, index) => (
+                                    <p>{item[key]}</p>)))
+        );}
+                            
+                        })
+     });
+
+
 
     const openTaskEditor = (e) => {
         var inputPlaceholder = []
@@ -258,30 +289,6 @@ function FirstPage(props) {
                         "buttonValue": props.componentsInput["buttonValue"],
                         "status": props.componentsInput["status"]
                     })
-                    const mail = props.mail
-                    const data = JSON.stringify({
-                        "assigned": mail
-                    });
-
-                    var config = {
-                        method: 'POST',
-                        url: 'http://127.0.0.1:5000/taskassign',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-
-                    axios(config)
-                        .then(response => {
-                            var description = response.data["data"]
-                            var pop = response.data["populator"]
-                            ReactDOM.render(
-                                <React.StrictMode>
-                                    <TaskViewer it={description} pop={pop} const mail={props.mail} />
-                                </React.StrictMode>,
-                                document.getElementById('dLogin'));
-                        })
                 })
         }
         else if (startTaskPage["title"] === "Task Completed Successfully") {
@@ -317,6 +324,8 @@ function FirstPage(props) {
                 {listUpdateTaskPageInputs}
                 {listUpdateTaskPageUpload}
                 {listUpdateTaskPageButtons}
+                {dd && <label>Comments:</label>}
+                {dd && com}
                 {btn}
                 {ff && btn2}
             </fieldset>

@@ -70,6 +70,16 @@ def task():
     message = createCalendarEvent(req_data)
     return jsonify({"message": "Task created Sucessfully..."})
 
+@app.route("/createMeeting", methods=['POST'])
+def meeting():
+    data= []
+    req_data = request.get_json()
+    req_data = req_data["data"]
+    for i in req_data["attendees"]:
+        data.append(getEmail(i))
+    message = createMeeting(req_data,data)
+    return jsonify({"message": "Meeting created Sucessfully...", "response":message})
+
 
 @app.route("/taskassign", methods=['POST'])
 def task_assign():
@@ -159,5 +169,44 @@ def checkmailfortaskupdate():
             new["task updates"].append(js)
             edit = config.collection1.replace_one(old,new)
             return ("Success")
+
+
+@app.route("/classInfo", methods=['GET'])
+def class_info():
+    classes = getClassInfo()
+    subjects = getSubjectInfo()
+    return jsonify({"xx":list(classes), "yy":list(subjects)})
+
+@app.route("/sectionInfo", methods=['POST'])
+def section_info():
+    x = request.get_json()
+    cls = x["class"]
+    section = getSectionInfo(cls)
+    return jsonify({"xx":section})
+
+@app.route("/getTeachersList", methods=['GET'])
+def get_teachers_list():
+    teachers, nonTeachers, test , test1= getTeachersList()
+    return jsonify({"teachers":list(teachers), "nonTeachers":list(nonTeachers), "test":test, "test1": test1})
+
+@app.route("/teacherRS", methods=['POST'])
+def teacherResponsibilitySubmission():
+    req_data = request.get_json()
+    config.collectionTeacherAssignments.insert_one(req_data).inserted_id
+    return jsonify({"message": "Task created Sucessfully..."})
+
+@app.route("/getComments", methods=['POST'])
+def getComments():
+    req_data = request.get_json()
+    req_data = req_data["id"]
+    comments = getAllComments(ObjectId(req_data))
+    return jsonify({"comments": comments})
+
+@app.route("/getProfileInfo", methods=['POST'])
+def getProfileInfo():
+    req_data = request.get_json()
+    req_data = req_data["mail"]
+    ct, subjects, repMgr, reprMgrName = getInfo(req_data)
+    return jsonify({"classTeacher": ct, "subjects":subjects, "reportingManagerEmail":repMgr, "reportingManagerName":reprMgrName})
 
 app.run(debug=True, port=5000, host="0.0.0.0")
