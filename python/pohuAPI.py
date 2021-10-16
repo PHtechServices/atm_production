@@ -77,8 +77,9 @@ def meeting():
     req_data = req_data["data"]
     for i in req_data["attendees"]:
         data.append(getEmail(i))
-    message = createMeeting(req_data,data)
-    return jsonify({"message": "Meeting created Sucessfully...", "response":message})
+    data = createMeeting(req_data,data)
+    config.collectionMeetings.insert_one(data).inserted_id
+    return jsonify({"message": "Meeting created Sucessfully..."})
 
 
 @app.route("/taskassign", methods=['POST'])
@@ -208,5 +209,17 @@ def getProfileInfo():
     req_data = req_data["mail"]
     ct, subjects, repMgr, reprMgrName = getInfo(req_data)
     return jsonify({"classTeacher": ct, "subjects":subjects, "reportingManagerEmail":repMgr, "reportingManagerName":reprMgrName})
+
+@app.route("/student_list", methods=["POST"])
+def s_list():
+    data = request.get_json()
+    slist = student_list(data["data"])
+    return jsonify({"message":"milgaya", "data":repr(slist)})
+
+@app.route("/qrcode", methods=["POST"])
+def qr():
+    data = request.get_json()
+    getqr = qrsearch(data["data"])
+    return jsonify({"data":getqr})
 
 app.run(debug=True, port=5000, host="0.0.0.0")

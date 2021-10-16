@@ -5,6 +5,8 @@ from pymongo import MongoClient
 client = MongoClient("mongodb+srv://himanshu:himanshu@cluster0.ebjdo.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-13hnoa-shard-0&w=majority&readPreference=primary&retryWrites=True",
                      tlsAllowInvalidCertificates=True, tls=True)
 db = client.AtmPohu
+db2 = client.students
+db3 = client.attendaceqr
 collection = db.Users
 collection1 = db.Task
 collectionStaff = db.Staff
@@ -13,6 +15,7 @@ collection2 = db.Roles
 collectionStatus = db.TaskStatus
 collectionClassInfo = db.ClassInfo
 collectionTeacherAssignments = db.teacherAssignments
+collectionMeetings = db.meetings
 
 eventTemplate = {
         'summary': 'Google I/O 2015',

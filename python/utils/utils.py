@@ -112,6 +112,7 @@ def createMeeting(req_data,data):
     event = service.events().insert(calendarId='primary',
                                     body=config.eventTemplate, sendNotifications=True, conferenceDataVersion=1).execute()
     print('Event created: %s' % (event.get('htmlLink')))
+    return(config.eventTemplate)
 
 
 def sha(password):
@@ -263,3 +264,19 @@ def getEmail(obji):
         if ObjectId(obji) == x["_id"]:
             data.append(x["primaryEmail"])
     return data
+
+def student_list(classn):
+    collection = config.db2.collection_names(include_system_collections=False)
+    dict2=[]
+    for collect in collection:
+        if classn == collect:
+            for j in config.db2[collect].find():
+                dict1 = j
+                dict1["checked"]=False
+                dict2.append(dict1)
+    return dict2
+
+def qrsearch(test):
+    for i in config.db3.collection.find():
+        if test == i["QR"]["qrid"]:
+            return i["QR"]
