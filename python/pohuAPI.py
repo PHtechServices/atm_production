@@ -214,7 +214,7 @@ def getProfileInfo():
 def s_list():
     data = request.get_json()
     slist = student_list(data["data"])
-    return jsonify({"message":"milgaya", "data":repr(slist)})
+    return jsonify({"message":"milgaya", "data":slist})
 
 @app.route("/qrcode", methods=["POST"])
 def qr():

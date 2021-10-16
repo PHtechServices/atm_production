@@ -272,6 +272,7 @@ def student_list(classn):
         if classn == collect:
             for j in config.db2[collect].find():
                 dict1 = j
+                dict1["_id"] = repr(dict1["_id"])
                 dict1["checked"]=False
                 dict2.append(dict1)
     return dict2
