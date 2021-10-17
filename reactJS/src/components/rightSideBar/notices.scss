@@ -1,0 +1,159 @@
+  p {
+    margin: 0;
+  }
+  
+  .notice {
+    position: relative;
+    margin: 1em;
+    background: #F9F9F9;
+    padding: 1em 1em 1em 2em;
+    border-left: 4px solid #DDD;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+    width: 200%;
+    height: 100%;
+    font-size: 12px;
+    margin-left: -30%;
+    margin-top: 10%;
+  }
+
+  .noticess {
+    margin-top: 10%;
+  }
+  
+  .notice:before {
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    left: -17px;
+    background-color: #DDD;
+    color: #FFF;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    font-family: Georgia;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  
+  .info {
+    border-color: #0074D9;
+  }
+  
+  .info:before {
+    content: "i";
+    background-color: #0074D9;
+  }
+
+  //Colors
+$background: #fefefe;
+$text: #4b507a;
+
+$cyan: #60daaa;
+$yellow: #fbca67;
+$orange: #ff8a30;
+$red: #f45e61;
+$purple: #6477b9;
+$blue: #0eb7da;
+
+.overall {
+  background: none;
+  border: 0;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 2px #9c9b9b;
+  color: #272626;
+  font-size: inherit;
+  font-weight: 700;
+  position: absolute;
+  vertical-align: middle;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+.draw {
+  transition: color 0.25s;
+
+&::before,
+&::after {
+  // Set border to invisible, so we don't see a 4px border on a 0x0 element before the transition starts
+  border: 2px solid transparent;
+  width: 0;
+  height: 0;
+}
+
+// This covers the top & right borders (expands right, then down)
+&::before {
+  top: 0;
+  left: 0;
+}
+
+// And this the bottom & left borders (expands left, then up)
+&::after {
+  bottom: 0;
+  right: 0;
+}
+
+&:hover {
+  color: rgb(0, 0, 0);
+}
+
+// Hover styles
+&:hover::before,
+&:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+&:hover::before {
+  border-top-color: rgb(0, 0, 0); // Make borders visible
+  border-right-color: rgb(0, 0, 0);
+  transition:
+    width 0.25s ease-out, // Width expands first
+    height 0.25s ease-out 0.25s; // And then height
+}
+
+&:hover::after {
+  border-bottom-color: rgb(0, 0, 0); // Make borders visible
+  border-left-color: rgb(0, 0, 0);
+  transition:
+    border-color 0s ease-out 0.5s, // Wait for ::before to finish before showing border
+    width 0.25s ease-out 0.5s, // And then exanding width
+    height 0.25s ease-out 0.75s; // And finally height
+}
+}
+
+// Inherits from .draw
+.meet {
+
+&:hover {
+  color: rgb(0, 0, 0);
+}
+
+// Start ::after in same position as ::before
+&::after {
+  top: 0;
+  left: 0;
+}
+
+// Change colors
+&:hover::before {
+  border-top-color: rgb(0, 0, 0);
+  border-right-color: rgb(0, 0, 0);
+}
+
+&:hover::after {
+  border-bottom-color: rgb(0, 0, 0);
+  border-left-color: rgb(0, 0, 0);
+  transition: // Animate height first, then width
+    height 0.25s ease-out,
+    width 0.25s ease-out 0.25s;
+}
+
+}

@@ -280,4 +280,32 @@ def a_filter():
     data1 = attendacne_filter(cc, date, st, et, sub)
     return jsonify({"message":"Data Retrived Sucessfully","data" : repr(data1)})
 
+@app.route("/teacherAttendance",methods=["POST"])
+def teacherLogin():
+    req_data = request.get_json()
+    print(req_data)
+    insertStatus=[]
+    for i in config.teachers.find():
+        if req_data["data"]["mail"] == i["data"]["mail"] and req_data["data"]["Cls"] == i["data"]["Cls"] and req_data["data"]["sub"] == i["data"]["sub"]:
+            print("Data to be Updated")
+        if req_data["data"]["mail"] != i["data"]["mail"] and req_data["data"]["Cls"] != i["data"]["Cls"] and req_data["data"]["sub"] != i["data"]["sub"]:
+            print("Data to be Inserted")
+            insertStatus.append(False)
+        else:
+            insertStatus.append(True)
+    if True in insertStatus:
+        js = req_data["data"]["loginTime"]
+        temp = {}
+        for key, value in i.items():
+            if key not in ["_id"]:
+                temp[key]=value
+        old = copy.deepcopy(temp)
+        new = copy.deepcopy(temp)
+        new["data"]["logoutTime"]=js
+        edit = config.teachers.replace_one(old,new)
+        return jsonify({"message":"updated updated updated"})
+    else:
+        teachers.insert_one(req_data).inserted_id
+        return jsonify({"message":"yes  yes  yes"})
+
 app.run(debug=True, port=5000, host="0.0.0.0")

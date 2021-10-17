@@ -12,6 +12,8 @@ import EditTask from '../editTasks/editTask';
 import AssignTeacher from '../assignTasks/assignTeacher';
 import MyProfile from '../profile/profile';
 import Meeting from '../meeting/meetings';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import TemporaryDrawer from '../notifications/notifications';
 
 
 function MenuButtons(props) {
@@ -21,20 +23,7 @@ function MenuButtons(props) {
   const classTeacher = props.classTeacher
   console.log(classTeacher)
   const mail=props.mail
-  const createNewTask = (e) => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <CreateTask assignee={props.mail} name={props.name} />
-      </React.StrictMode>,
-      document.getElementById('dLogin'));
-  }
-  const scheduleMeetings = (e) => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <Meeting />
-      </React.StrictMode>,
-      document.getElementById('dLogin'));
-  }
+
 
   const gotoHome = (e) => {
 
@@ -57,14 +46,6 @@ function MenuButtons(props) {
       }
 
 
-  const createNewUser = (e) => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <CreateUser name={props.name} />
-      </React.StrictMode>,
-      document.getElementById('dLogin'));
-  }
-
   const clickLogo = (e) => {
     ReactDOM.render(
       <React.StrictMode>
@@ -74,26 +55,6 @@ function MenuButtons(props) {
     );
   }
 
-  const assignTask = (e) => {
-    var config = {
-      method: 'GET',
-      url: 'http://127.0.0.1:5000/classInfo',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    };
-
-    axios(config)
-      .then(response => {
-        var classInfo = response.data["xx"]
-        var subjectInfo = response.data["yy"]
-        ReactDOM.render(
-          <React.StrictMode>
-            <AssignTeacher classInfo={classInfo} subjectInfo={subjectInfo} />
-          </React.StrictMode>,
-          document.getElementById('dLogin'));
-        })
-      }
 
   const viewTasks = (e) => {
     const mail = props.mail
@@ -136,24 +97,17 @@ function MenuButtons(props) {
     <nav class="navbar navbar-expand-sm navbar-expand-xl bg-dark navbar-dark">
       <a class="navbar-brand" href="#" onClick={clickLogo}><h6>ATM - At The Moment</h6></a>
       <ul class="navbar-nav pl-xl-5 pr-xl-5 pl-sm-1 pr-sm-1">
-        {cTask && <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={createNewTask}><h6>Create Task</h6></a>
-        </li>}
-        {cUser && <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={createNewUser}><h6>Create User</h6></a>
-        </li>}
+
         <li class="nav-item mr-xl-3 mr-sm-3">
           <a class="nav-link" href="#" onClick={viewTasks}><h6>My Tasks</h6></a>
         </li>
         <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={scheduleMeetings}><h6>Schedule Meeting</h6></a>
-        </li>
-        <li class="nav-item mr-xl-3 mr-sm-3">
           <a class="nav-link" href="#" onClick={viewProfile}><h6>My Profile</h6></a>
         </li>
-        {cTask && <li class="nav-item mr-xl-3 mr-sm-3">
-          <a class="nav-link" href="#" onClick={assignTask}><h6>Assign</h6></a>
-        </li>}
+        <li class="nav-item mr-xl-3 mr-sm-3">
+        </li>
+        <TemporaryDrawer />
+        
       </ul>
     </nav>
   );

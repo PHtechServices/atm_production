@@ -120,13 +120,14 @@ function Login() {
 
               ReactDOM.render(
                 <React.StrictMode>
-                  <Notices />
+                  <Notices mail={mail} name={dd} />
                 </React.StrictMode>,
                 document.getElementById('notices'));
 
               ReactDOM.render(
                 <React.StrictMode>
-                  <ChatBar />
+                  <ChatBar name={dd} mail={mail} classTeacher={classTeacher} rmEmail={rmEmail} 
+            rmName={rmName} subjects={subjects}/>
                 </React.StrictMode>,
                 document.getElementById('sideb'));
             }

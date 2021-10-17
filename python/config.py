@@ -19,6 +19,7 @@ class8 = db4.class8
 class9 = db4.class9
 class10 = db4.class10
 nursery = db4.nursery
+teachers=db4.teacherattendance
 lkg = db4.L.K.G
 ukg = db4.U.K.G
 garbage = db4.garbage

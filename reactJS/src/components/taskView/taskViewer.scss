@@ -5,13 +5,14 @@ h3 { color: rgb(0, 0, 0) }
 
 .App1 {
   margin-left: -65%;
-  margin-top: -8%;
+  margin-top: -5.5%;
 }
 
 .featureList {
     font-size: 12px;
     line-height: 1;
     font-family: 'Roboto', 'sans-serif';
+    width: 100px;
 }
 
 .featureList {
@@ -69,4 +70,104 @@ button {
   font-size: x-small;
 }
 
-// Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.
+@import url('https://fonts.googleapis.com/css?family=Barlow:400,400i,700');
+
+:root {
+    --panel-border: 2px solid rgba(23, 24, 87, 0.2);
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+h1, h2, h3 {
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.lead {
+    margin-top: 0;
+    margin-bottom: 4rem;
+}
+
+a {
+    color: crimson;
+}
+
+.panel {
+  margin-left: -150%;
+    margin-bottom: 1rem;
+    width: 620px;
+    
+    h2 {
+        font-size: 1.25rem;
+        margin: 0;
+    }
+}
+
+.panel__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    border: var(--panel-border);
+    font-weight: 700;
+    color: inherit;
+}
+
+.panel__header-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+}
+
+button.panel__header {
+    cursor: pointer;
+    border-radius: 0;
+    
+    &:focus,
+    &:hover {
+        outline: none;
+        background-color: rgb(80, 80, 80);
+        color: white;
+        border-color: rgb(80, 80, 80);
+    }
+}
+
+.panel__body {
+    border-right: var(--panel-border);
+    border-bottom: var(--panel-border);
+    border-left: var(--panel-border);
+    
+    > *:first-child {
+        margin-top: 0;    
+    }
+    
+    > *:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.panel__body,
+.panel__header {
+    padding: 1rem;   
+}
+
+.panel__body[aria-hidden="true"] {
+    display: none;
+}
+
+.panel-group {
+    .panel {
+        margin-bottom: 0;
+    }
+    
+    .panel:not(:first-child) .panel__header {
+        border-top: none;
+    }
+}
