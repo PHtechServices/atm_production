@@ -222,4 +222,62 @@ def qr():
     getqr = qrsearch(data["data"])
     return jsonify({"data":getqr})
 
+@app.route("/attendace",methods=["POST"])
+def attendace():
+    req_data = request.get_json()
+    c = req_data['class']
+    if c == "1a" or c== "1b" or c== "1c" or c== "1d":
+        config.db4.class1.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class1 collection."})
+    elif c== "2a" or c== "2b" or c=="2c" or c=="2d":
+        config.db4.class2.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class2 collection."})
+    elif c== "3a" or c=="3b" or c=="3c" or c=="3d":
+        config.db4.class3.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class3 collection."})
+    elif c== "4a" or c=="4b" or c=="4c" or c=="4d":
+        config.db4.class4.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class4 collection."})
+    elif c== "5a" or c=="5b" or c=="5c" or c=="5d":
+        config.db4.class5.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class5 collection."})
+    elif c== "6a" or c=="6b" or c=="6c" or c=="6d":
+        config.db4.class6.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class6 collection."})
+    elif c== "7a" or c=="7b" or c=="7c" or c=="7d":
+        config.db4.class7.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class7 collection."})
+    elif c== "8a" or c=="8b" or c=="8c" or c=="8d":
+        config.db4.class8.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class8 collection."})
+    elif c== "9a" or c=="9b" or c=="9c" or c=="9d":
+        config.db4.class9.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class9 collection."})
+    elif c== "10a" or c=="10b" or c=="10c" or c=="10d":
+        config.db4.class10.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Class10 collection."})
+    elif c== "nursery":
+        config.db4.nursery.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into nursey collection."})
+    elif c== "L.K.G":
+        config.db4.lkg.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into L.K.G collection."})
+    elif c== "U.K.G":
+        config.db4.ukg.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into U.K.G collection."})
+    else:
+        config.db4.garbage.insert_one(req_data).inserted_id
+        return jsonify({"message":"data inserted into Garbage collection."})
+
+@app.route("/filter", methods=["POST"])
+def a_filter():
+    req_data = request.get_json()
+    cc=req_data["data"]["cc"]
+    date=req_data["data"]["date"]
+    st=req_data["data"]["st"]
+    et=req_data["data"]["et"]
+    sub=req_data["data"]["sub"]
+    data1 = attendacne_filter(cc, date, st, et, sub)
+    return jsonify({"message":"Data Retrived Sucessfully","data" : repr(data1)})
+
 app.run(debug=True, port=5000, host="0.0.0.0")

@@ -281,3 +281,16 @@ def qrsearch(test):
     for i in config.collectionQR.find():
         if test == i["QR"]["qrid"]:
             return i["QR"]
+
+def attendacne_filter(cc, date, st, et, sub):
+    class_collection = []
+    class_collection.append([config.class1,config.class2,config.class3,config.class4,config.class5,
+    config.class6,config.class7,config.class8,config.class9,config.class10,config.nursery,config.lkg,config.ukg])
+    for i in class_collection[0]:
+        for j in i.find():
+            if cc == j['class'] and sub == j['subject'] and date == j['Date'] and st == j["Time"]["starttime"] and et == j["Time"]["endtime"]:
+                data =  list(i.find())
+                print (data)
+                return data
+            else:
+                print("NO records available")
