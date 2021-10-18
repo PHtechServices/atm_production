@@ -55,7 +55,7 @@ function Notices(props) {
     else if (operation == "classes") {
       var config = {
         method: 'GET',
-        url: 'http://172.17.0.2:5000/classInfo',
+        url: '172.17.0.2:5000/classInfo',
         headers: {
           'Content-Type': 'application/json'
         },

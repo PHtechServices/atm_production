@@ -35,7 +35,7 @@ function Login() {
 
     var config = {
       method: 'POST',
-      url: 'http://172.17.0.2:5000/login',
+      url: '172.17.0.2:5000/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -75,7 +75,7 @@ function Login() {
         else {
           var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/getProfileInfo',
+            url: '172.17.0.2:5000/getProfileInfo',
             headers: {
               'Content-Type': 'application/json'
             },

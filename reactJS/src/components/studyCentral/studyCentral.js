@@ -69,7 +69,7 @@ export default function InsertCentral(props) {
       
           var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/studyCentral',
+            url: '172.17.0.2:5000/studyCentral',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -80,7 +80,7 @@ export default function InsertCentral(props) {
             .then(response => {
                 var config = {
                     method: 'GET',
-                    url: 'http://172.17.0.2:5000/classInfo',
+                    url: '172.17.0.2:5000/classInfo',
                     headers: {
                       'Content-Type': 'application/json'
                     },
@@ -107,7 +107,7 @@ export default function InsertCentral(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/sectionInfo',
+            url: '172.17.0.2:5000/sectionInfo',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -125,7 +125,7 @@ export default function InsertCentral(props) {
     const teachersList1 = (e) => {
         var config = {
             method: 'GET',
-            url: 'http://172.17.0.2:5000/getTeachersList',
+            url: '172.17.0.2:5000/getTeachersList',
             headers: {
               'Content-Type': 'application/json'
             },

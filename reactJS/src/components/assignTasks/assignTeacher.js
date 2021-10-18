@@ -27,7 +27,7 @@ function AssignTeacher(props) {
     const teachersList = (e) => {
         var config = {
             method: 'GET',
-            url: 'http://172.17.0.2:5000/getTeachersList',
+            url: '172.17.0.2:5000/getTeachersList',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -45,7 +45,7 @@ function AssignTeacher(props) {
         const reportingList = (e) => {
             var config = {
                 method: 'GET',
-                url: 'http://172.17.0.2:5000/getTeachersList',
+                url: '172.17.0.2:5000/getTeachersList',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -70,7 +70,7 @@ function AssignTeacher(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/sectionInfo',
+            url: '172.17.0.2:5000/sectionInfo',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -122,7 +122,7 @@ function AssignTeacher(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/teacherRS',
+            url: '172.17.0.2:5000/teacherRS',
             headers: {
                 'Content-Type': 'application/json'
             },

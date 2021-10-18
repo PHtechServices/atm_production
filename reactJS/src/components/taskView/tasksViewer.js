@@ -127,7 +127,7 @@ function TaskViewer(props) {
 
             var config = {
                 method: 'POST',
-                url: 'http://172.17.0.2:5000/getjson',
+                url: '172.17.0.2:5000/getjson',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -166,7 +166,7 @@ function TaskViewer(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/taskstatus',
+            url: '172.17.0.2:5000/taskstatus',
             headers: {
                 'Content-Type': 'application/json'
             },

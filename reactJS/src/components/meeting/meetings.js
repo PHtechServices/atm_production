@@ -43,7 +43,7 @@ function Meeting() {
     const teachersList = (e) => {
         var config = {
             method: 'get',
-            url: 'http://172.17.0.2:5000/getTeachersList',
+            url: '172.17.0.2:5000/getTeachersList',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -89,7 +89,7 @@ function Meeting() {
 
     var config = {
         method: 'POST',
-        url: 'http://172.17.0.2:5000/createMeeting',
+        url: '172.17.0.2:5000/createMeeting',
         headers: {
             'Content-Type': 'application/json'
         },
