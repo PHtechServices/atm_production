@@ -305,7 +305,7 @@ def teacherLogin():
         edit = config.teachers.replace_one(old,new)
         return jsonify({"message":"updated updated updated"})
     else:
-        teachers.insert_one(req_data).inserted_id
+        config.teachers.insert_one(req_data).inserted_id
         return jsonify({"message":"yes  yes  yes"})
 
 app.run(debug=True, port=5000, host="0.0.0.0")
