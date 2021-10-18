@@ -295,29 +295,43 @@ def teacherLogin():
     req_data = request.get_json()
     print(req_data)
     insertStatus=[]
-    updateStatus=[]
-    for i in config.teachers.find():
-        if req_data["data"]["mail"] == i["data"]["mail"] and req_data["data"]["Cls"] == i["data"]["Cls"] and req_data["data"]["sub"] == i["data"]["sub"] and req_data["data"]["date"] == i["data"]["date"]:
-            print("Data to be Updated")
-        if req_data["data"]["mail"] != i["data"]["mail"] and req_data["data"]["Cls"] != i["data"]["Cls"] and req_data["data"]["sub"] != i["data"]["sub"] and req_data["data"]["date"] == i["data"]["date"]:
-            print("Data to be Inserted")
-            insertStatus.append(False)
-        else:
-            insertStatus.append(True)
-    if True in insertStatus:
-        js = req_data["data"]["loginTime"]
+    mail=req_data["data"]["mail"]
+    date=req_data["data"]["date"]
+    sub=req_data["data"]["sub"]
+    cls=req_data["data"]["cls"]
+    data1=getLoginJson(mail,date,sub,cls)
+    jsoni=jsonify({"message":"Data Insereted Sucessfully","data" : "Success"})
+    print (data1)
+    if data1==None:
+        config.teachers.insert_one(req_data).inserted_id
+        final=jsoni
+    else:
+        js = req_data["data"]["logoutTime"]
         temp = {}
-        for key, value in i.items():
+        for key, value in data1.items():
             if key not in ["_id"]:
                 temp[key]=value
         old = copy.deepcopy(temp)
         new = copy.deepcopy(temp)
         new["data"]["logoutTime"]=js
-        edit = config.teachers.replace_one(old,new)
-        return jsonify({"message":"updated updated updated"})
+        config.teachers.replace_one(old,new)
+        final=jsonify({"message":"Logout Sucessfully","data" : "Success"})
+    return final
 
+@app.route("/teachersJson", methods=["POST"])
+def teachersJson():
+    req_data = request.get_json()
+    mail=req_data["data"]["mail"]
+    date=req_data["data"]["date"]
+    sub=req_data["data"]["sub"]
+    cls=req_data["data"]["cls"]
+    data1 = getLoginJson(mail, date,sub,cls)
+    print(data1)
+    jsoni=jsonify({"message":"Data Retrived Sucessfully","data" : "hello"})
+    if data1==None:
+        final=jsoni
     else:
-        config.teachers.insert_one(req_data).inserted_id
-        return jsonify({"message":"yes  yes  yes"})
+        final=jsonify({"message":"Data Retrived Sucessfully","data" : data1})
+    return final
 
 app.run(debug=True, port=5000, host="0.0.0.0")

@@ -341,3 +341,10 @@ def attendacne_filter(cc, date, st, et, sub):
                 return data
             else:
                 print("NO records available")
+
+def getLoginJson(mail,date,sub,cls):
+    for j in config.teachers.find():
+        if mail == j["data"]["mail"] and date == j["data"]["date"] and sub == j["data"]["sub"] and cls==j["data"]["cls"]:
+            data = j
+            data["_id"]=str(data["_id"])
+            return data
