@@ -48,6 +48,7 @@ function Login() {
         const dd = response.data.uName
         var mail = response.data.mailID[0]
         var role = response.data.role
+        var designation = response.data.designation
         let cTask = true
         let cUser = true
         if (role === "SA" || role === "A") {
@@ -66,7 +67,7 @@ function Login() {
         if (status === "UserName or Password is Incorrect") {
           ReactDOM.render(
             <React.StrictMode>
-              <HomeScreen name={dd} mail={mail} />
+              <HomeScreen name={dd} mail={mail} designation={designation} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
         }
@@ -126,7 +127,7 @@ function Login() {
 
               ReactDOM.render(
                 <React.StrictMode>
-                  <ChatBar name={dd} mail={mail} classTeacher={classTeacher} rmEmail={rmEmail} 
+                  <ChatBar designation={designation} name={dd} mail={mail} classTeacher={classTeacher} rmEmail={rmEmail} 
             rmName={rmName} subjects={subjects}/>
                 </React.StrictMode>,
                 document.getElementById('sideb'));

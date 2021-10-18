@@ -11,10 +11,6 @@ function ChatBar(props) {
         rmName={props.rmName} subjects={props.subjects}/>
       </React.StrictMode>,
       document.getElementById('dLogin'));
-      ReactDOM.render(
-      <React.StrictMode>
-      </React.StrictMode>,
-      document.getElementById('sideb'));
   }
   return (
     <div>
@@ -33,12 +29,12 @@ function ChatBar(props) {
             <img style={{ width: "200px", height: "160px" }} src="http://bootdey.com/img/Content/avatar/avatar6.png" loading="lazy" alt="Photo of Himanshu Singh" id="ember152" class="feed-identity-module__member-photo profile-rail-card__member-photo EntityPhoto-circle-5 lazy-image ember-view" />
 
             <div class="profile-rail-card__actor-link t-16 t-black t-bold" style={{ color: "rgb(0, 0, 0)", textAlign:"center"}}>
-              Himanshu Singh
+              {props.name}
             </div>
           </a>
 
           <p class="identity-headline t-12 t-black--light t-normal mt1" style={{ color: "#9c9b9b", fontSize:"12px", textAlign:"center"}}>
-            Vice President - Srishti World Schools
+            {props.designation} - Srishti World Schools
           </p>
         </div>
         <div class="feed-identity-module__widgets mv3" style={{ marginTop: "2%"}}>

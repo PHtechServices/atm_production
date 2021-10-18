@@ -5,6 +5,12 @@ import "./menuButtons.css"
 import axios from 'axios';
 import TaskViewer from '../taskView/tasksViewer';
 import 'reactjs-popup/dist/index.css';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function HomeScreen(props) {
 
@@ -42,7 +48,7 @@ function HomeScreen(props) {
   const getWish = () => {
     var today = new Date()
     var curHr = today.getHours()
-  
+
     if (curHr < 12) {
       setWish("Good Morning")
     } else if (curHr < 18) {
@@ -58,36 +64,6 @@ function HomeScreen(props) {
   });
 
 
-
-  const viewTasks = (e) => {
-    e.preventDefault();
-    const mail = props.mail
-    const data = JSON.stringify({
-      "assigned": mail
-    });
-
-    var config = {
-      method: 'POST',
-      url: 'http://127.0.0.1:5000/taskassign',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
-
-    axios(config)
-      .then(response => {
-        var description = response.data["data"]
-        var pop = response.data["populator"]
-        ReactDOM.render(
-          <React.StrictMode>
-            <TaskViewer it={description} pop={pop} const mail = {props.mail} cTask={props.cTask}/>
-          </React.StrictMode>,
-          document.getElementById('dLogin'));
-      })
-
-  }
-
   return (
     <div class="wrapper">
       <main>
@@ -95,10 +71,18 @@ function HomeScreen(props) {
           <div class="block">
             <h1>Hello, {message}.</h1>
             <h5>{wish}!</h5><br />
-            <p id="quote">Here's a Quote for you:</p>
+            <p id="quote">Here's a Quote for you:</p><br />
             <cite class="intro">{quotes[num]}</cite><br /><br />
-            <p>Let's see what's in your To-Do List Today</p>
-            <a href="/" class="button" onClick={viewTasks}>View Tasks</a>
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 18, textDecoration: "underline" }} color="text.primary" gutterBottom>
+                  Theme of the Month
+                </Typography>
+                <Typography sx={{ mb: 1 }} color="text.secondary">
+                  Self Confidence
+                </Typography>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>

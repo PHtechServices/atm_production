@@ -121,7 +121,6 @@ function TaskViewer(props) {
 
         {
             const id = e.target.id
-            console.log(id)
             const data = JSON.stringify({
                 "objid": id
             });
@@ -154,13 +153,13 @@ function TaskViewer(props) {
         }
     }
 
-    const openTaskUpdater = (e) => {
+    const openTaskUpdater = (tag) => (e) => {
+
+        console.log(tag)
 
         const mail = props.mail
-        console.log(mail)
         const id = e.target.id
         const pop = props.pop
-        console.log(pop)
         const data = JSON.stringify({
             "taskID": id
         });
@@ -189,11 +188,9 @@ function TaskViewer(props) {
                     y = "green"
                     ff = true
                 }
-                console.log(y)
-                console.log(x)
                 ReactDOM.render(
                     <React.StrictMode>
-                        <UpdateTasks ff={ff} colorTaskCreated={x} colorTaskUpdated={y} componentsInput={componentsInput} mail={mail} pop={pop} id={id} />
+                        <UpdateTasks tag={tag} ff={ff} colorTaskCreated={x} colorTaskUpdated={y} componentsInput={componentsInput} mail={mail} pop={pop} id={id} />
                     </React.StrictMode>,
                     document.getElementById('dLogin'));
             })
@@ -201,20 +198,55 @@ function TaskViewer(props) {
             });
     }
     const description = props.it
-    let listItems
-    if (props.msg == "tasks are not assigned") {
-        listItems = <div>No Tasks to Display</div>
-    }
-    else {
-        listItems = Object.keys(description).map((key, index) => (
-            <tr>
-                <td class="tick"><label id={description[key]}>{key}</label></td>
-                {/* style={{ color: pop[description[key]][0] == "medium" ? "orange" : pop[description[key]][0] == "high" ? "red" : "green" }} */}
-                {props.cTask && <td><button id={description[key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
-                <td><button id={description[key]} onClick={openTaskUpdater} class="offset">Update</button></td>
-            </tr>
-        ))
-    }
+    let listItemsActive
+    console.log(description)
+    listItemsActive = Object.keys(description["activeTask"][0]).map((key, index) => (
+        <tr>
+            <td class="tick"><label id={description[key]}>{key}</label></td>
+            {props.cTask && <td><button id={description["activeTask"][0][key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+            <td><button id={description["activeTask"][0][key]} onClick={openTaskUpdater("activeTaskID")} class="offset">Update</button></td>
+        </tr>
+    ))
+
+    let listItemsBacklog
+    listItemsBacklog = Object.keys(description["backlogTask"][0]).map((key, index) => (
+        <tr>
+            <td class="tick"><label id={description[key]}>{key}</label></td>
+            {/* style={{ color: pop[description[key]][0] == "medium" ? "orange" : pop[description[key]][0] == "high" ? "red" : "green" }} */}
+            {props.cTask && <td><button id={description["backlogTask"][0][key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+            <td><button id={description["backlogTask"][0][key]} onClick={openTaskUpdater("backlogTaskID")} class="offset">Update</button></td>
+        </tr>
+    ))
+
+    let listItemsCompleted
+    listItemsCompleted = Object.keys(description["completedTask"][0]).map((key, index) => (
+        <tr>
+            <td class="tick"><label id={description[key]}>{key}</label></td>
+            {/* style={{ color: pop[description[key]][0] == "medium" ? "orange" : pop[description[key]][0] == "high" ? "red" : "green" }} */}
+            {props.cTask && <td><button id={description["completedTask"][0][key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+            <td><button id={description["completedTask"][0][key]} onClick={openTaskUpdater("completedTaskID")} class="offset">Update</button></td>
+        </tr>
+    ))
+
+    let listItemsFuture
+    listItemsFuture = Object.keys(description["futureTask"][0]).map((key, index) => (
+        <tr>
+            <td class="tick"><label id={description[key]}>{key}</label></td>
+            {/* style={{ color: pop[description[key]][0] == "medium" ? "orange" : pop[description[key]][0] == "high" ? "red" : "green" }} */}
+            {props.cTask && <td><button id={description["futureTask"][0][key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+            <td><button id={description["futureTask"][0][key]} onClick={openTaskUpdater("futureTaskID")} class="offset">Update</button></td>
+        </tr>
+    ))
+
+    let listItemsUrgent
+    listItemsUrgent = Object.keys(description["urgentTask"][0]).map((key, index) => (
+        <tr>
+            <td class="tick"><label id={description["urgentTask"][0][key]}>{key}</label></td>
+            {/* style={{ color: pop[description[key]][0] == "medium" ? "orange" : pop[description[key]][0] == "high" ? "red" : "green" }} */}
+            {props.cTask && <td><button id={description["urgentTask"][0][key]} onClick={openTaskEditor} class="offset">Edit</button></td>}
+            <td><button id={description["urgentTask"][0][key]} onClick={openTaskUpdater("urgentTaskID")} class="offset">Update</button></td>
+        </tr>
+    ))
 
 
     return (
@@ -233,7 +265,7 @@ function TaskViewer(props) {
                                             <th>Priority</th>
                                         </tr>
                                     </thead>
-                                    {listItems}
+                                    {listItemsActive}
                                 </table>
                             </Panel>
                             <Panel title="Urgent Tasks">
@@ -245,7 +277,7 @@ function TaskViewer(props) {
                                             <th>Priority</th>
                                         </tr>
                                     </thead>
-                                    {listItems}
+                                    {listItemsUrgent}
                                 </table>
                             </Panel>
                             <Panel title="Backlogs">
@@ -257,7 +289,7 @@ function TaskViewer(props) {
                                             <th>Priority</th>
                                         </tr>
                                     </thead>
-                                    {listItems}
+                                    {listItemsBacklog}
                                 </table>
                             </Panel>
                             <Panel title="Future Tasks">
@@ -269,7 +301,7 @@ function TaskViewer(props) {
                                             <th>Priority</th>
                                         </tr>
                                     </thead>
-                                    {listItems}
+                                    {listItemsFuture}
                                 </table>
                             </Panel>
                         </PanelGroup>

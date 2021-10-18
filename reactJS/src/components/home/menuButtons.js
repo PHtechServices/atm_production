@@ -75,20 +75,11 @@ function MenuButtons(props) {
       .then(response => {
         var description = response.data["data"]
         var pop = response.data["populator"]
-        if (response.data["message"] === "tasks are assigned") {
           ReactDOM.render(
             <React.StrictMode>
               <TaskViewer msg={response.data["message"]} it={description} pop={pop} const mail={props.mail} cTask={props.cTask} />
             </React.StrictMode>,
             document.getElementById('dLogin'));
-        }
-        else {
-          ReactDOM.render(
-            <React.StrictMode>
-              <div>No Tasks to Display</div>
-            </React.StrictMode>,
-            document.getElementById('dLogin'));
-        }
       })
 
   }

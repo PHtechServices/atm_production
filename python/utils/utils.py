@@ -9,16 +9,19 @@ import requests
 import json
 from uuid import uuid4
 import numpy as np
+import datetime
 
 
 def userNameCheck(userName):
     uName = []
     mailID = []
+    designation = []
     for doc in config.collection.find():
         if userName == doc["primaryEmail"]:
             uName.append(doc["name"]["givenName"])
             mailID.append(doc["primaryEmail"])
-            return("Success", uName, mailID)
+            designation.append(doc["organizations"][0]["title"])
+            return("Success", uName, mailID, designation)
 
 
 def passwordCheck(password):
@@ -28,21 +31,65 @@ def passwordCheck(password):
 
 
 def task_assigned(assigned):
-    data = {}
-    id = {}
-    try:
-        for doc in config.collection1.find():
-            if assigned == doc["task assigned to"] and ("Start Task" == doc["task status"] or "Update Task Status" == doc["task status"]):
-                data[doc["task description"]] = str(doc["_id"])
-                id[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
-                                       doc["task assigned to"], doc["task description"]]
-                tbd = "Success"
-        return tbd, data, id
-    except:
-        tbd = "Failure"
-        id = None
-        data[doc["task description"]] = "No Tasks To Display"
-        return tbd, data, id
+    dataActive = {}
+    idActive = {}
+    dataUrgent = {}
+    idUrgent = {}
+    dataComplete = {}
+    idComplete = {}
+    dataFuture = {}
+    idFuture = {}
+    dataBacklog = {}
+    idBacklog = {}
+    activeTask = []
+    urgentTask = []
+    futureTask = []
+    completedTask = []
+    backlogTask=[]
+    activeTaskID = []
+    urgentTaskID = []
+    futureTaskID = []
+    completedTaskID = []
+    backlogTaskID =[]
+    for doc in config.collection1.find():
+        if assigned == doc["task assigned to"] and "Update Task Status" == doc["task status"]:
+            dataActive[doc["task description"]] = str(doc["_id"])
+            idActive[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
+                                    doc["task assigned to"], doc["task description"]]
+            activeTask.append(dataActive)
+            activeTaskID.append(idActive)
+
+
+        if assigned == doc["task assigned to"] and doc["task status"] =="Start Task" :
+            dataFuture[doc["task description"]] = str(doc["_id"])
+            idFuture[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
+                                    doc["task assigned to"], doc["task description"]]
+            futureTask.append(dataFuture)
+            futureTaskID.append(idFuture)
+
+        if assigned == doc["task assigned to"] and "Task Completed Successfully" == doc["task status"]:
+            dataComplete[doc["task description"]] = str(doc["_id"])
+            idComplete[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
+                                    doc["task assigned to"], doc["task description"]]
+            completedTask.append(dataComplete)
+            completedTaskID.append(idComplete)
+
+        if assigned == doc["task assigned to"] and "high" == doc["task priority"]:
+            dataUrgent[doc["task description"]] = str(doc["_id"])
+            idUrgent[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
+                                    doc["task assigned to"], doc["task description"]]
+            urgentTask.append(dataUrgent)
+            urgentTaskID.append(idUrgent)
+
+        if assigned == doc["task assigned to"] and datetime.datetime.now().date() >= datetime.datetime.strptime(doc["task deadline"], "%Y-%m-%d").date():
+            dataBacklog[doc["task description"]] = str(doc["_id"])
+            idBacklog[str(doc["_id"])] = [doc["task priority"], doc["task assigned by"],
+                                    doc["task assigned to"], doc["task description"]]
+            backlogTask.append(dataBacklog)
+            backlogTaskID.append(idBacklog)
+
+
+    return (activeTask, urgentTask, futureTask, completedTask, backlogTask, activeTaskID, urgentTaskID, futureTaskID, completedTaskID, backlogTaskID)
 
 
 def task_approver(approver):
@@ -254,7 +301,7 @@ def getInfo(mail):
     for x in config.collection.find():
         if x["_id"] == ObjectId(rm):
             repMgr = x["primaryEmail"]
-            reprMgrName = x["name"]["givenName"] + x["name"]["familyName"]
+            reprMgrName = x["name"]["givenName"] + " "+ x["name"]["familyName"]
     return ct, subjects, repMgr, reprMgrName
 
 

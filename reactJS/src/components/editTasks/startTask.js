@@ -25,6 +25,8 @@ function FirstPage(props) {
     const pop = props.pop
     const id = props.id
     const ff = props.ff
+    const tag = props.tag
+    console.log(tag)
 
     useEffect(() => {
         const id = props.id
@@ -300,10 +302,10 @@ function FirstPage(props) {
             );
         }
     }
-    console.log(startTaskPage["status"])
+    console.log(pop[props.tag][0][id])
     const listUpdateTaskPageInputs = startTaskPage["componentsInput"].map((item, index) =>
         <label>{item}
-            <input id="inputValues" type="text" name="email" placeholder={pop[id][index]} readOnly={startTaskPage["status"]} style={{ width: "340px" }} onChange={getComments} /></label>
+            <input id="inputValues" type="text" name="email" placeholder={pop[props.tag][0][id][index]} readOnly={startTaskPage["status"]} style={{ width: "340px" }} onChange={getComments} /></label>
 
     );
     const listUpdateTaskPageUpload = startTaskPage["componentsUpload"].map((item) =>

@@ -14,6 +14,12 @@ import CreateUser from "../createUser/createUser";
 import Meeting from "../meeting/meetings";
 import axios from "axios";
 import AssignTeacher from "../assignTasks/assignTeacher";
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+
+
 
 
 function Notices(props) {
@@ -75,6 +81,27 @@ function Notices(props) {
       <div class="notice info" style={{ marginTop: "40%" }}><p>This is a an info notice, it provides feedback of a neutral nature to the user.</p></div>
       <div class="notice info"><p>This is a an info notice, it provides feedback of a neutral nature to the user.</p></div>
       <div class="notice info"><p>This is a an info notice, it provides feedback of a neutral nature to the user.</p></div>
+      <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > :not(style)': {
+          m: 1,
+          width: 275,
+          height: 100,
+          marginLeft: -5,
+          position: "absolute"
+        },
+      }}
+    >
+      <Paper elevation={3} >
+      <Typography sx={{ fontSize: 15, textAlign:"center"}} color="text.primary" gutterBottom>
+                  This Week
+                </Typography>
+                </Paper>
+
+    </Box>
+    <Button variant="outlined" sx={{ position:"absolute", marginTop:15, marginLeft:5}}>View Calendar</Button>
       <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
         <SpeedDial
           ariaLabel="SpeedDial basic example"

@@ -16,7 +16,7 @@ CORS(app)
 @app.route("/login", methods=['POST'])
 def loginTest():
     details = request.get_json()["userDetails"]
-    userName, uName, mailID = userNameCheck(details["userName"])
+    userName, uName, mailID, designation = userNameCheck(details["userName"])
     passwordN = passwordCheck(details["password"])
     role = fetchrole(mailID[0])
     if userName == "Success":
@@ -24,7 +24,8 @@ def loginTest():
             return jsonify({"message": "Congratualtion for Login",
                             "uName": uName[-1],
                             "mailID": mailID,
-                            "role": role})
+                            "role": role,
+                            "designation": designation})
         else:
             return jsonify({"message": "UserName or Password is Incorrect",
                             "uName": "Not Defined",
@@ -85,11 +86,20 @@ def meeting():
 @app.route("/taskassign", methods=['POST'])
 def task_assign():
     assignee = request.get_json()
-    assign, data, id = task_assigned(assignee["assigned"])
-    if assign == "Success":
-        return jsonify({"message": "tasks are assigned", "data": data, "populator": id})
-    else:
-        return jsonify({"message": "tasks are not assigned", "data": data})
+    activeTask, urgentTask, futureTask, completedTask, backlogTask, activeTaskID, urgentTaskID, futureTaskID, completedTaskID, backlogTaskID = task_assigned(assignee["assigned"])
+    data = {}
+    populator = {}
+    data["activeTask"]=[{'Nothing To Display':"message"}] if len(activeTask)==0 else activeTask
+    data["urgentTask"]=[{'Nothing To Display':"message"}] if len(urgentTask)==0 else urgentTask
+    data["futureTask"]=[{'Nothing To Display':"message"}] if len(futureTask)==0 else futureTask
+    data["completedTask"]=[{'Nothing To Display':"message"}] if len(completedTask)==0 else completedTask
+    data["backlogTask"]=[{'Nothing To Display':"message"}] if len(backlogTask)==0 else backlogTask
+    populator["activeTaskID"]=[{'Nothing To Display':"message"}] if len(activeTaskID)==0 else activeTaskID
+    populator["urgentTaskID"]=[{'Nothing To Display':"message"}] if len(urgentTaskID)==0 else urgentTaskID
+    populator["futureTaskID"]=[{'Nothing To Display':"message"}] if len(futureTaskID)==0 else futureTaskID
+    populator["completedTaskID"]=[{'Nothing To Display':"message"}] if len(completedTaskID)==0 else completedTaskID
+    populator["backlogTaskID"]=[{'Nothing To Display':"message"}] if len(backlogTaskID)==0 else backlogTaskID
+    return jsonify({"message": "tasks are assigned", "data": data, "ass":assignee["assigned"], "populator":populator})
 
 
 @app.route("/taskapprove", methods=['POST'])
@@ -285,10 +295,11 @@ def teacherLogin():
     req_data = request.get_json()
     print(req_data)
     insertStatus=[]
+    updateStatus=[]
     for i in config.teachers.find():
-        if req_data["data"]["mail"] == i["data"]["mail"] and req_data["data"]["Cls"] == i["data"]["Cls"] and req_data["data"]["sub"] == i["data"]["sub"]:
+        if req_data["data"]["mail"] == i["data"]["mail"] and req_data["data"]["Cls"] == i["data"]["Cls"] and req_data["data"]["sub"] == i["data"]["sub"] and req_data["data"]["date"] == i["data"]["date"]:
             print("Data to be Updated")
-        if req_data["data"]["mail"] != i["data"]["mail"] and req_data["data"]["Cls"] != i["data"]["Cls"] and req_data["data"]["sub"] != i["data"]["sub"]:
+        if req_data["data"]["mail"] != i["data"]["mail"] and req_data["data"]["Cls"] != i["data"]["Cls"] and req_data["data"]["sub"] != i["data"]["sub"] and req_data["data"]["date"] == i["data"]["date"]:
             print("Data to be Inserted")
             insertStatus.append(False)
         else:
@@ -304,6 +315,7 @@ def teacherLogin():
         new["data"]["logoutTime"]=js
         edit = config.teachers.replace_one(old,new)
         return jsonify({"message":"updated updated updated"})
+
     else:
         config.teachers.insert_one(req_data).inserted_id
         return jsonify({"message":"yes  yes  yes"})
