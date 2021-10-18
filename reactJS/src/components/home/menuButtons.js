@@ -69,7 +69,7 @@ function MenuButtons(props) {
   const insertCentral = (e) => {
     var config = {
       method: 'GET',
-      url: '172.17.0.2:5000/classInfo',
+      url: 'http://172.17.0.2:5000/classInfo',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -97,7 +97,7 @@ function MenuButtons(props) {
 
     var config = {
       method: 'POST',
-      url: '172.17.0.2:5000/taskassign',
+      url: 'http://172.17.0.2:5000/taskassign',
       headers: {
         'Content-Type': 'application/json'
       },
