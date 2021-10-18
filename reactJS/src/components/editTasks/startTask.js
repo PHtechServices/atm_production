@@ -36,7 +36,7 @@ function FirstPage(props) {
 
                     var config = {
                         method: 'POST',
-                        url: 'http://172.17.0.2:5000/getComments',
+                        url: 'http://34.136.41.197:5000/getComments',
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -69,7 +69,7 @@ function FirstPage(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/getjson',
+            url: 'http://34.136.41.197:5000/getjson',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -108,7 +108,7 @@ function FirstPage(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/taskstatus',
+            url: 'http://34.136.41.197:5000/taskstatus',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -157,7 +157,7 @@ function FirstPage(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/edit',
+            url: 'http://34.136.41.197:5000/edit',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -181,7 +181,7 @@ function FirstPage(props) {
 
                 var config = {
                     method: 'POST',
-                    url: 'http://172.17.0.2:5000/taskassign',
+                    url: 'http://34.136.41.197:5000/taskassign',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -221,7 +221,7 @@ function FirstPage(props) {
 
             var config = {
                 method: 'POST',
-                url: 'http://172.17.0.2:5000/edit',
+                url: 'http://34.136.41.197:5000/edit',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -245,7 +245,7 @@ function FirstPage(props) {
 
                     var config = {
                         method: 'POST',
-                        url: 'http://172.17.0.2:5000/taskassign',
+                        url: 'http://34.136.41.197:5000/taskassign',
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -274,7 +274,7 @@ function FirstPage(props) {
 
             var config = {
                 method: 'POST',
-                url: 'http://172.17.0.2:5000/updateComments',
+                url: 'http://34.136.41.197:5000/updateComments',
                 headers: {
                     'Content-Type': 'application/json'
                 },

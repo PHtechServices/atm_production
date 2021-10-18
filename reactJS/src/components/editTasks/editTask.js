@@ -67,7 +67,7 @@ function EditTask(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/staffDetails',
+            url: 'http://34.136.41.197:5000/staffDetails',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -102,7 +102,7 @@ function EditTask(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://172.17.0.2:5000/department',
+            url: 'http://34.136.41.197:5000/department',
             headers: {
                 'Content-Type': 'application/json'
             },
