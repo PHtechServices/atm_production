@@ -57,7 +57,7 @@ function EditTaskCategorization(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://127.0.0.1:5000/creattask',
+            url: 'http://172.17.0.2:5000/creattask',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -76,7 +76,7 @@ function EditTaskCategorization(props) {
     
             var config = {
                 method: 'POST',
-                url: 'http://127.0.0.1:5000/delete_collec',
+                url: 'http://172.17.0.2:5000/delete_collec',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -96,7 +96,7 @@ function EditTaskCategorization(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://127.0.0.1:5000/department',
+            url: 'http://172.17.0.2:5000/department',
             headers: {
                 'Content-Type': 'application/json'
             },

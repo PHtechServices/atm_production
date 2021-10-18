@@ -14,6 +14,8 @@ import MyProfile from '../profile/profile';
 import Meeting from '../meeting/meetings';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import TemporaryDrawer from '../notifications/notifications';
+import TaskProfile from '../taskProfile/taskProfile';
+import InsertCentral from '../studyCentral/studyCentral';
 
 
 function MenuButtons(props) {
@@ -55,6 +57,37 @@ function MenuButtons(props) {
     );
   }
 
+  const viewTP = (e) => {
+    ReactDOM.render(
+      <React.StrictMode>
+        <TaskProfile />
+      </React.StrictMode>,
+      document.getElementById('dLogin')
+    );
+  }
+
+  const insertCentral = (e) => {
+    var config = {
+      method: 'GET',
+      url: 'http://172.17.0.2:5000/classInfo',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    axios(config)
+      .then(response => {
+        var classInfo = response.data["xx"]
+        var subjectInfo = response.data["yy"] 
+        ReactDOM.render(
+          <React.StrictMode>
+            <InsertCentral classInfo={classInfo} subjectInfo={subjectInfo} />
+          </React.StrictMode>,
+          document.getElementById('dLogin')
+        );      
+})
+  }
+
 
   const viewTasks = (e) => {
     const mail = props.mail
@@ -64,7 +97,7 @@ function MenuButtons(props) {
 
     var config = {
       method: 'POST',
-      url: 'http://127.0.0.1:5000/taskassign',
+      url: 'http://172.17.0.2:5000/taskassign',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -96,6 +129,10 @@ function MenuButtons(props) {
           <a class="nav-link" href="#" onClick={viewProfile}><h6>My Profile</h6></a>
         </li>
         <li class="nav-item mr-xl-3 mr-sm-3">
+          <a class="nav-link" href="#" onClick={viewTP}><h6>Test Page</h6></a>
+        </li>
+        <li class="nav-item mr-xl-3 mr-sm-3">
+          <a class="nav-link" href="#" onClick={insertCentral}><h6>Study Central</h6></a>
         </li>
         <TemporaryDrawer />
         

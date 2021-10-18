@@ -8,6 +8,7 @@ db = client.AtmPohu
 db2 = client.students
 db3 = client.attendaceqr
 db4 = client.attendance
+collectionSC=db.studyCentralInsert
 class1 = db4.class1
 class2 = db4.class2
 class3 = db4.class3

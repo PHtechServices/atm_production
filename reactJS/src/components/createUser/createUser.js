@@ -65,7 +65,7 @@ function CreateUser() {
 
         var config = {
             method: 'post',
-            url: 'http://127.0.0.1:5000/createuser',
+            url: 'http://172.17.0.2:5000/createuser',
             headers: {
                 'Content-Type': 'application/json'
             },
