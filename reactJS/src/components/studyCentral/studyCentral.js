@@ -74,7 +74,7 @@ export default function InsertCentral(props) {
       
           var config = {
             method: 'POST',
-            url: 'http://34.136.41.197/studyCentral',
+            url: 'http://34.136.41.197:5000/studyCentral',
             headers: {
               'Content-Type': 'application/json'
             },
