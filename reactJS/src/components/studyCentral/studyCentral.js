@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 export default function InsertCentral(props) {
     const [class1, setClass] = React.useState("");
     const [subject, setSubject] = React.useState("");
+    const [day, setDay] = React.useState("");
     const [section, setSection] = React.useState("");
     const [startTime, setStartTime] = React.useState(new Date('2021-09-31T21:11:54'));
     const [endTime, setEndTime] = React.useState(new Date('2021-09-31T21:11:54'));
@@ -41,6 +42,9 @@ export default function InsertCentral(props) {
 
     const submitClass = (newValue) => {
         setClass(newValue.target.value);
+    };
+    const submitDay = (newValue) => {
+        setDay(newValue.target.value);
     };
     const submitSubject = (newValue) => {
         setSubject(newValue.target.value);
@@ -60,6 +64,7 @@ export default function InsertCentral(props) {
     const onSubmitButton = (newValue) => {
         const data = JSON.stringify({
             "class":class1,
+            "day":day,
             "subject":subject,
             "section":section,
             "startTime":startTime,
@@ -69,7 +74,7 @@ export default function InsertCentral(props) {
       
           var config = {
             method: 'POST',
-            url: 'http://34.136.41.197:5000/studyCentral',
+            url: 'http://127.0.0.1:5000/studyCentral',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -80,7 +85,7 @@ export default function InsertCentral(props) {
             .then(response => {
                 var config = {
                     method: 'GET',
-                    url: 'http://34.136.41.197:5000/classInfo',
+                    url: 'http://127.0.0.1:5000/classInfo',
                     headers: {
                       'Content-Type': 'application/json'
                     },
@@ -89,6 +94,7 @@ export default function InsertCentral(props) {
                   axios(config)
                     .then(response => {
                         setClass("")
+                        setDay("")
                         setSubject("")
                         setSection("")
                         setStartTime('2021-09-31T21:11:54')
@@ -107,7 +113,7 @@ export default function InsertCentral(props) {
 
         var config = {
             method: 'POST',
-            url: 'http://34.136.41.197:5000/sectionInfo',
+            url: 'http://127.0.0.1:5000/sectionInfo',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -125,7 +131,7 @@ export default function InsertCentral(props) {
     const teachersList1 = (e) => {
         var config = {
             method: 'GET',
-            url: 'http://34.136.41.197:5000/getTeachersList',
+            url: 'http://127.0.0.1:5000/getTeachersList',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -156,6 +162,25 @@ export default function InsertCentral(props) {
                         <em>None</em>
                     </MenuItem>
                     {classItems}
+                </Select>
+            </FormControl><br />
+            <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-simple-select-autowidth-label">Select Day</InputLabel>
+                <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    autoWidth
+                    onChange={submitDay}
+                >
+                    <MenuItem value="">
+                    <em>Selece Day</em>
+                        </MenuItem>
+                    <MenuItem value="Monday">Monday</MenuItem>
+                    <MenuItem value="Tuesday">Tuesday</MenuItem>
+                    <MenuItem value="Wednessday">Wednessday</MenuItem>
+                    <MenuItem value="Thursday">Thursday</MenuItem>
+                    <MenuItem value="Friday">Friday</MenuItem>
+                    <MenuItem value="Saturday">Saturday</MenuItem>
                 </Select>
             </FormControl><br />
             <FormControl sx={{ m: 1, width: 300 }}>
