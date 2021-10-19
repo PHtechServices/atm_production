@@ -334,7 +334,7 @@ def teachersJson():
         final=jsonify({"message":"Data Retrived Sucessfully","data" : data1})
     return final
 
-@app.route("/studyCentral",methods=["POST"])
+@app.route("/studyCentral", methods=["POST"])
 def SC():
     req_data = request.get_json()
     config.collectionSC.insert_one(req_data).inserted_id
